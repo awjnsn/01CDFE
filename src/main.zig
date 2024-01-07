@@ -1,5 +1,23 @@
 const std = @import("std");
 
+var State = struct {
+    memory: [0x10000]u8,
+    reg_AF: u16,
+    reg_BC: u16,
+    reg_DE: u16,
+    reg_HL: u16,
+    reg_SP: u16,
+    reg_PC: u16,
+};
+
+const Regs = enum {AF, A, F, BC, B, C, DE, D, E, HL, H, L, SP, PC};
+
+const Flags = enum {Z, N, H, C};
+
+pub fn setReg(reg: Regs, val: u16!u8) void {
+        
+}
+
 pub fn main() !void {
     // Prints to stderr (it's a shortcut based on `std.io.getStdErr()`)
     std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
