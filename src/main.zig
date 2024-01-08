@@ -1,26 +1,9 @@
 const std = @import("std");
-
-var State = struct {
-    memory: [0x10000]u8,
-    reg_AF: u16,
-    reg_BC: u16,
-    reg_DE: u16,
-    reg_HL: u16,
-    reg_SP: u16,
-    reg_PC: u16,
-};
-
-const Regs = enum {AF, A, F, BC, B, C, DE, D, E, HL, H, L, SP, PC};
-
-const Flags = enum {Z, N, H, C};
-
-pub fn setReg(reg: Regs, val: u16!u8) void {
-        
-}
+const state = @import("state.zig");
 
 pub fn main() !void {
     // Prints to stderr (it's a shortcut based on `std.io.getStdErr()`)
-    std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
+    //std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
 
     // stdout is for the actual output of your application, for example if you
     // are implementing gzip, then only the compressed bytes should be sent to
@@ -29,7 +12,23 @@ pub fn main() !void {
     var bw = std.io.bufferedWriter(stdout_file);
     const stdout = bw.writer();
 
-    try stdout.print("Run `zig build test` to run the tests.\n", .{});
+    var testState: state.State = state.State.init();
+
+    try stdout.print("Initial state\n\n", .{});
+
+    try testState.pp(stdout);
+
+    try stdout.print("Changing PC\n\n", .{});
+
+    testState.setReg(state.Regs.PC, 0xBEEF);
+
+    try testState.pp(stdout);
+
+    try stdout.print("Setting Z flag\n\n", .{});
+
+    testState.setFlag(state.Flags.Z, true);
+
+    try testState.pp(stdout);
 
     try bw.flush(); // don't forget to flush!
 }
