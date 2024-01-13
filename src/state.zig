@@ -1,3 +1,5 @@
+const std = @import("std");
+
 pub const Regs = enum {AF, A, BC, B, C, DE, D, E, HL, H, L, SP, PC};
 pub const Flags = enum {Z, N, H, C};
 
@@ -115,3 +117,20 @@ pub const State = struct {
     }
 };
 
+test "State Change" {
+    const stdout_file = std.io.getStdOut().writer();
+    var bw = std.io.bufferedWriter(stdout_file);
+    const stdout = bw.writer();
+    var testState: State = State.init();
+    try stdout.print("Initial state\n\n", .{});
+    try testState.pp(stdout);
+    try stdout.print("Changing PC\n\n", .{});
+    testState.setReg(Regs.PC, 0xBEEF);
+    try std.testing.expectEqual(testState.getReg(Regs.PC), 0xBEEF);
+    try testState.pp(stdout);
+    try stdout.print("Setting Z flag\n\n", .{});
+    testState.setFlag(Flags.Z, true);
+    try std.testing.expectEquals(testState.getFlag(Flags.Z), true);
+    try testState.pp(stdout);
+    try bw.flush();
+}
