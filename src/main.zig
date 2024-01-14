@@ -19,9 +19,13 @@ pub fn main() !void {
     try header.pp(stdout);
 
     var st: state.State = state.State.init();
-    cpu.execute(&st, rom_data);
-
-    try bw.flush();
+   
+    while (true) {
+        try st.pp(stdout);
+        cpu.execute(&st, rom_data);
+        try st.pp(stdout);
+        try bw.flush();
+    }
 }
 
 test "Read ROM" {
