@@ -1,10 +1,9 @@
 const std = @import("std");
 const state = @import("state.zig");
 const cartHeader = @import("cartHeader.zig");
-const execute = @import("execute.zig");
+const cpu = @import("cpu.zig");
 
 pub fn main() !void {
-    // Read in rom file
     const allocator = std.heap.page_allocator;
     const args = try std.process.argsAlloc(allocator);
     defer std.process.argsFree(allocator, args);
@@ -18,8 +17,10 @@ pub fn main() !void {
 
     const header: cartHeader.CartridgeHeader = cartHeader.CartridgeHeader.init(rom_data);
     try header.pp(stdout);
+
     var st: state.State = state.State.init();
-    execute.execute(&st, rom_data);
+    cpu.execute(&st, rom_data);
+
     try bw.flush();
 }
 
