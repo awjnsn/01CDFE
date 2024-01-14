@@ -130,7 +130,7 @@ test "State Change" {
     try testState.pp(stdout);
     try stdout.print("Setting Z flag\n\n", .{});
     testState.setFlag(Flags.Z, true);
-    try std.testing.expectEquals(testState.getFlag(Flags.Z), true);
+    try std.testing.expectEqual(testState.getFlag(Flags.Z), true);
     try testState.pp(stdout);
     try bw.flush();
 }
