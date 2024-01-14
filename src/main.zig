@@ -1,6 +1,7 @@
 const std = @import("std");
 const state = @import("state.zig");
 const cartHeader = @import("cartHeader.zig");
+const execute = @import("execute.zig");
 
 pub fn main() !void {
     // Read in rom file
@@ -17,16 +18,9 @@ pub fn main() !void {
 
     const header: cartHeader.CartridgeHeader = cartHeader.CartridgeHeader.init(rom_data);
     try header.pp(stdout);
-
-    
-    //
-    //for (0x100..0x150) |i| {
-    //    try stdout.print("Byte {x}\n", .{rom_data[i]});
-    //}
-
+    var st: state.State = state.State.init();
+    execute.execute(&st, rom_data);
     try bw.flush();
-
-
 }
 
 test "Read ROM" {

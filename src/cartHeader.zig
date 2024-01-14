@@ -41,11 +41,3 @@ pub const CartridgeHeader = struct {
         try stdout.print("Catridge Header for {s}:\n", .{self.title});
     }
 };
-
-//test "Cartridge Header" {
-//    const stdout_file = std.io.getStdOut().writer();
-//    var bw = std.io.bufferedWriter(stdout_file);
-//    const stdout = bw.writer();
-//    try stdout.print("Cartridge Header:\n", .{});
-//    try bw.flush();
-//}
