@@ -90,7 +90,7 @@ pub const State = struct {
             .reg_DE = 0,
             .reg_HL = 0,
             .reg_SP = 0,
-            .reg_PC = 0,
+            .reg_PC = 0x100,
         };
     }
 

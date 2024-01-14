@@ -1,5 +1,6 @@
 const std = @import("std");
 const state = @import("state.zig");
+const cartHeader = @import("cartHeader.zig");
 
 pub fn main() !void {
     // Read in rom file
@@ -9,6 +10,23 @@ pub fn main() !void {
     const rom_file = try std.fs.cwd().openFile(args[1], .{});
     const rom_data: []u8 = try rom_file.readToEndAlloc(allocator, 8192 * 1024);
     defer allocator.free(rom_data);
+
+    const stdout_file = std.io.getStdOut().writer();
+    var bw = std.io.bufferedWriter(stdout_file);
+    const stdout = bw.writer();
+
+    const header: cartHeader.CartridgeHeader = cartHeader.CartridgeHeader.init(rom_data);
+    try header.pp(stdout);
+
+    
+    //
+    //for (0x100..0x150) |i| {
+    //    try stdout.print("Byte {x}\n", .{rom_data[i]});
+    //}
+
+    try bw.flush();
+
+
 }
 
 test "Read ROM" {
