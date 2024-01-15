@@ -17,9 +17,9 @@ pub fn executeAt(address: u16, state: *st.State, rom_data: []u8) void {
     const instruction: insn.Instruction = insn.Instruction.init(state);
     const cb_insn: u8 = if (address + 1 < rom_data.len) rom_data[address + 1] else undefined;
     const d8: u8 = if (address + 1 < rom_data.len) rom_data[address + 1] else undefined;
-    const d16: u16 = if (address + 2 < rom_data.len) (@as(u16, rom_data[address + 1]) << 8) + rom_data[address + 2] else undefined;
+    const d16: u16 = if (address + 2 < rom_data.len) (@as(u16, rom_data[address + 2]) << 8) + rom_data[address + 1] else undefined;
     const a8: u8 = if (address + 1 < rom_data.len) rom_data[address + 1] else undefined;
-    const a16: u16 = if (address + 2 < rom_data.len) (@as(u16, rom_data[address + 1]) << 8) + rom_data[address + 2] else undefined;
+    const a16: u16 = if (address + 2 < rom_data.len) (@as(u16, rom_data[address + 2]) << 8) + rom_data[address + 1] else undefined;
     const r8: u8 = if (address + 1 < rom_data.len) rom_data[address + 1] else undefined;
 
     std.debug.print(
@@ -236,7 +236,7 @@ pub fn executeAt(address: u16, state: *st.State, rom_data: []u8) void {
         0xC0 => unreachable,
         0xC1 => unreachable,
         0xC2 => unreachable,
-        0xC3 => unreachable,
+        0xC3 => instruction.jp(a16),
         0xC4 => unreachable,
         0xC5 => unreachable,
         0xC6 => unreachable,
