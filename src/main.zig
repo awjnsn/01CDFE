@@ -19,6 +19,8 @@ pub fn main() !void {
     try header.pp(stdout);
 
     var st: state.State = state.State.init();
+
+    // TODO: Map rom in to memory correctly, function of header I think...
    
     while (true) {
         try st.pp(stdout);
