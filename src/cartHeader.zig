@@ -41,6 +41,7 @@ pub const CartridgeHeader = struct {
 
     pub fn getMapper(self: CartridgeHeader) Mapper {
         return switch (self.cartridge_type) {
+            0x00 => Mapper.ROM_ONLY,
             0x01 => Mapper.MBC1,
             0x02 => Mapper.MBC1,
             0x03 => Mapper.MBC1,
