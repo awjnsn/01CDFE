@@ -1,7 +1,7 @@
 const std = @import("std");
 
-pub const Regs = enum {AF, A, BC, B, C, DE, D, E, HL, H, L, SP, PC};
-pub const Flags = enum {Z, N, H, C};
+pub const Regs = enum { AF, A, BC, B, C, DE, D, E, HL, H, L, SP, PC };
+pub const Flags = enum { Z, N, H, C };
 
 pub const State = struct {
     memory: [0x10000]u8,
@@ -13,7 +13,7 @@ pub const State = struct {
     reg_PC: u16,
 
     pub fn isSingleByteReg(reg: Regs) bool {
-        return switch(reg) {
+        return switch (reg) {
             Regs.A => true,
             Regs.B => true,
             Regs.C => true,
@@ -42,7 +42,7 @@ pub const State = struct {
             Flags.C => (self.reg_AF & (0x1 << 0x4)) > 0,
         };
     }
-   
+
     pub fn setReg(self: *State, reg: Regs, val: u16) void {
         // If the value is too large for the register
         if (isSingleByteReg(reg) and (val > 0xFF)) unreachable;
@@ -71,7 +71,7 @@ pub const State = struct {
             Regs.BC => self.reg_BC,
             Regs.B => self.reg_BC >> 8,
             Regs.C => self.reg_BC & 0x00FF,
-            Regs.DE =>  self.reg_DE,
+            Regs.DE => self.reg_DE,
             Regs.D => self.reg_DE >> 8,
             Regs.E => self.reg_DE & 0x00FF,
             Regs.HL => self.reg_HL,
@@ -83,7 +83,7 @@ pub const State = struct {
     }
 
     pub fn init() State {
-        return State {
+        return State{
             .memory = [_]u8{0} ** 0x10000,
             .reg_AF = 0x0000,
             .reg_BC = 0,

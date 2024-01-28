@@ -7,9 +7,7 @@ pub const Instruction = struct {
     state: *st.State,
 
     pub fn init(state: *st.State) Instruction {
-        return Instruction {
-            .state = state
-        };
+        return Instruction{ .state = state };
     }
 
     pub fn nop(self: *const Instruction) u8 {

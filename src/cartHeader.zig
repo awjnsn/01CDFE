@@ -1,6 +1,6 @@
 const std = @import("std");
 
-pub const Mapper = enum {ROM_ONLY, MBC1, MBC2, MBC3, MBC5, MBC6, MBC7, MMM01, HuC1, HuC3};
+pub const Mapper = enum { ROM_ONLY, MBC1, MBC2, MBC3, MBC5, MBC6, MBC7, MMM01, HuC1, HuC3 };
 
 pub const CartridgeHeader = struct {
     entry_point: []u8,
@@ -20,7 +20,7 @@ pub const CartridgeHeader = struct {
     global_checksum: []u8,
 
     pub fn init(rom_data: []u8) CartridgeHeader {
-        return CartridgeHeader {
+        return CartridgeHeader{
             .entry_point = rom_data[0x100..0x104],
             .nintendo_logo = rom_data[0x104..0x134],
             .title = rom_data[0x134..0x144],
@@ -40,7 +40,7 @@ pub const CartridgeHeader = struct {
     }
 
     pub fn getMapper(self: CartridgeHeader) Mapper {
-        return switch(self.cartridge_type) {
+        return switch (self.cartridge_type) {
             0x01 => Mapper.MBC1,
             0x02 => Mapper.MBC1,
             0x03 => Mapper.MBC1,
@@ -73,7 +73,7 @@ pub const CartridgeHeader = struct {
     pub fn pp(self: CartridgeHeader, stdout: anytype) !void {
         try stdout.print("Catridge Header for {s}:\n", .{self.title});
         try stdout.print("\tMapper:", .{});
-        switch(self.getMapper()) {
+        switch (self.getMapper()) {
             Mapper.ROM_ONLY => try stdout.print("ROM ONLY\n", .{}),
             Mapper.MBC1 => try stdout.print("MBC1\n", .{}),
             Mapper.MBC2 => try stdout.print("MBC2\n", .{}),

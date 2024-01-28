@@ -21,7 +21,7 @@ pub fn main() !void {
     var st: state.State = state.State.init();
 
     // TODO: Map rom in to memory correctly, function of header I think...
-   
+
     while (true) {
         try st.pp(stdout);
         cpu.execute(&st, rom_data);
@@ -39,6 +39,6 @@ test "Read ROM" {
     const rom_file = try std.fs.cwd().openFile(rom_path, .{});
     const rom_data: []u8 = try rom_file.readToEndAlloc(allocator, 8192 * 1024);
     defer allocator.free(rom_data);
-    try stdout.print("Read in {s} of size {d}\n", .{rom_path, rom_data.len});
+    try stdout.print("Read in {s} of size {d}\n", .{ rom_path, rom_data.len });
     try bw.flush();
 }
