@@ -20,7 +20,7 @@ pub fn main() !void {
 
     var st: state.State = state.State.init();
 
-    // TODO: Map rom in to memory correctly, function of header I think...
+    st.mapMemory(rom_data, header.getMapper());
 
     while (true) {
         try st.pp(stdout);

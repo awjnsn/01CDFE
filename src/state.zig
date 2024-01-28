@@ -1,4 +1,5 @@
 const std = @import("std");
+const cartHeader = @import("cartHeader.zig");
 
 pub const Regs = enum { AF, A, BC, B, C, DE, D, E, HL, H, L, SP, PC };
 pub const Flags = enum { Z, N, H, C };
@@ -94,6 +95,14 @@ pub const State = struct {
         };
     }
 
+    pub fn mapMemory(self: *State, rom_data: []u8, mapper: cartHeader.Mapper) void {
+        switch (mapper) {
+            cartHeader.Mapper.ROM_ONLY => std.mem.copyForwards(u8, &self.memory, rom_data),
+            else => std.debug.print("Unsupported!\n", .{}),
+        }
+        std.debug.print("Mapping {d} bytes\n", .{rom_data.len});
+    }
+
     pub fn pp(self: *State, stdout: anytype) !void {
         try stdout.print("Register State:\n", .{});
         try stdout.print("AF: 0x{x:0>4}\n", .{self.getReg(Regs.AF)});
@@ -114,6 +123,20 @@ pub const State = struct {
         try stdout.print("[N: {}] ", .{self.getFlag(Flags.N)});
         try stdout.print("[H: {}] ", .{self.getFlag(Flags.H)});
         try stdout.print("[C: {}]\n\n", .{self.getFlag(Flags.C)});
+    }
+
+    pub fn dumpMem(self: *State) void {
+        const wrap: u16 = 25; // Keep output lines constrained to 80 chars
+        for (self.memory, 0..) |byte, addr| {
+            if (addr % wrap == 0) {
+                if (addr > 0) {
+                    std.debug.print("\n", .{});
+                }
+                std.debug.print("{x:0>4} ", .{addr});
+            }
+            std.debug.print("{x:0>2} ", .{byte});
+        }
+        std.debug.print("\n", .{});
     }
 };
 
