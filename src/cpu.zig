@@ -279,21 +279,69 @@ pub fn executeAt(address: u16, state: *st.State, rom_data: []u8) void {
         // 1  4
         // - 0 0 C
         0x3F => unreachable,
+        // LD B,B
+        // 1  4
+        // - - - -
         0x40 => unreachable,
+        // LD B,C
+        // 1  4
+        // - - - -
         0x41 => unreachable,
+        // LD B,D
+        // 1  4
+        // - - - -
         0x42 => unreachable,
+        // LD B,E
+        // 1  4
+        // - - - -
         0x43 => unreachable,
+        // LD B,H
+        // 1  4
+        // - - - -
         0x44 => unreachable,
+        // LD B,L
+        // 1  4
+        // - - - -
         0x45 => unreachable,
+        // LD B,(HL)
+        // 1  8
+        // - - - -
         0x46 => unreachable,
+        // LD B,A
+        // 1  4
+        // - - - -
         0x47 => unreachable,
+        // LD C,B
+        // 1  4
+        // - - - -
         0x48 => unreachable,
+        // LD C,C
+        // 1  4
+        // - - - -
         0x49 => unreachable,
+        // LD C,D
+        // 1  4
+        // - - - -
         0x4A => unreachable,
+        // LD C,E
+        // 1  4
+        // - - - -
         0x4B => unreachable,
+        // LD C,H
+        // 1  4
+        // - - - -
         0x4C => unreachable,
+        // LD C,L
+        // 1  4
+        // - - - -
         0x4D => unreachable,
+        // LD C,(HL)
+        // 1  8
+        // - - - -
         0x4E => unreachable,
+        // LD C,A
+        // 1  4
+        // - - - -
         0x4F => unreachable,
         0x50 => unreachable,
         0x51 => unreachable,
