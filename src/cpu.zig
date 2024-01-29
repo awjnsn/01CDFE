@@ -836,517 +836,1029 @@ pub fn executeAt(address: u16, state: *st.State, rom_data: []u8) void {
         // - - - -
         0xCA => unreachable,
         0xCB => switch (cb_insn) {
-            //
+            // RLC B
+            // 2  8
+            // Z 0 0 C
             0x00 => unreachable,
-            //
+            // RLC C
+            // 2  8
+            // Z 0 0 C
             0x01 => unreachable,
-            //
+            // RLC D
+            // 2  8
+            // Z 0 0 C
             0x02 => unreachable,
-            //
+            // RLC E
+            // 2  8
+            // Z 0 0 C
             0x03 => unreachable,
-            //
+            // RLC H
+            // 2  8
+            // Z 0 0 C
             0x04 => unreachable,
-            //
+            // RLC L
+            // 2  8
+            // Z 0 0 C
             0x05 => unreachable,
-            //
+            // RLC (HL)
+            // 2  16
+            // Z 0 0 C
             0x06 => unreachable,
-            //
+            // RLC A
+            // 2  8
+            // Z 0 0 C
             0x07 => unreachable,
-            //
+            // RRC B
+            // 2  8
+            // Z 0 0 C
             0x08 => unreachable,
-            //
+            // RRC C
+            // 2  8
+            // Z 0 0 C
             0x09 => unreachable,
-            //
+            // RRC D
+            // 2  8
+            // Z 0 0 C
             0x0A => unreachable,
-            //
+            // RRC E
+            // 2  8
+            // Z 0 0 C
             0x0B => unreachable,
-            //
+            // RRC H
+            // 2  8
+            // Z 0 0 C
             0x0C => unreachable,
-            //
+            // RRC L
+            // 2  8
+            // Z 0 0 C
             0x0D => unreachable,
-            //
+            // RRC (HL)
+            // 2  16
+            // Z 0 0 C
             0x0E => unreachable,
-            //
+            // RRC A
+            // 2  8
+            // Z 0 0 C
             0x0F => unreachable,
-            //
+            // RL B
+            // 2  8
+            // Z 0 0 C
             0x10 => unreachable,
-            //
+            // RL C
+            // 2  8
+            // Z 0 0 C
             0x11 => unreachable,
-            //
+            // RL D
+            // 2  8
+            // Z 0 0 C
             0x12 => unreachable,
-            //
+            // RL E
+            // 2  8
+            // Z 0 0 C
             0x13 => unreachable,
-            //
+            // RL H
+            // 2  8
+            // Z 0 0 C
             0x14 => unreachable,
-            //
+            // RL L
+            // 2  8
+            // Z 0 0 C
             0x15 => unreachable,
-            //
+            // RL (HL)
+            // 2  16
+            // Z 0 0 C
             0x16 => unreachable,
-            //
+            // RL A
+            // 2  8
+            // Z 0 0 C
             0x17 => unreachable,
-            //
+            // RR B
+            // 2  8
+            // Z 0 0 C
             0x18 => unreachable,
-            //
+            // RR C
+            // 2  8
+            // Z 0 0 C
             0x19 => unreachable,
-            //
+            // RR D
+            // 2  8
+            // Z 0 0 C
             0x1A => unreachable,
-            //
+            // RR E
+            // 2  8
+            // Z 0 0 C
             0x1B => unreachable,
-            //
+            // RR H
+            // 2  8
+            // Z 0 0 C
             0x1C => unreachable,
-            //
+            // RR L
+            // 2  8
+            // Z 0 0 C
             0x1D => unreachable,
-            //
+            // RR (HL)
+            // 2  16
+            // Z 0 0 C
             0x1E => unreachable,
-            //
+            // RR A
+            // 2  8
+            // Z 0 0 C
             0x1F => unreachable,
-            //
+            // SLA B
+            // 2  8
+            // Z 0 0 C
             0x20 => unreachable,
-            //
+            // SLA C
+            // 2  8
+            // Z 0 0 C
             0x21 => unreachable,
-            //
+            // SLA D
+            // 2  8
+            // Z 0 0 C
             0x22 => unreachable,
-            //
+            // SLA E
+            // 2  8
+            // Z 0 0 C
             0x23 => unreachable,
-            //
+            // SLA H
+            // 2  8
+            // Z 0 0 C
             0x24 => unreachable,
-            //
+            // SLA L
+            // 2  8
+            // Z 0 0 C
             0x25 => unreachable,
-            //
+            // SLA (HL)
+            // 2  16
+            // Z 0 0 C
             0x26 => unreachable,
-            //
+            // SLA A
+            // 2  8
+            // Z 0 0 C
             0x27 => unreachable,
-            //
+            // SRA B
+            // 2  8
+            // Z 0 0 0
             0x28 => unreachable,
-            //
+            // SRA C
+            // 2  8
+            // Z 0 0 0
             0x29 => unreachable,
-            //
+            // SRA D
+            // 2  8
+            // Z 0 0 0
             0x2A => unreachable,
-            //
+            // SRA E
+            // 2  8
+            // Z 0 0 0
             0x2B => unreachable,
-            //
+            // SRA H
+            // 2  8
+            // Z 0 0 0
             0x2C => unreachable,
-            //
+            // SRA L
+            // 2  8
+            // Z 0 0 0
             0x2D => unreachable,
-            //
+            // SRA (HL)
+            // 2  16
+            // Z 0 0 0
             0x2E => unreachable,
-            //
+            // SRA A
+            // 2  8
+            // Z 0 0 0
             0x2F => unreachable,
-            //
+            // SWAP B
+            // 2  8
+            // Z 0 0 0
             0x30 => unreachable,
-            //
+            // SWAP C
+            // 2  8
+            // Z 0 0 0
             0x31 => unreachable,
-            //
+            // SWAP D
+            // 2  8
+            // Z 0 0 0
             0x32 => unreachable,
-            //
+            // SWAP E
+            // 2  8
+            // Z 0 0 0
             0x33 => unreachable,
-            //
+            // SWAP H
+            // 2  8
+            // Z 0 0 0
             0x34 => unreachable,
-            //
+            // SWAP L
+            // 2  8
+            // Z 0 0 0
             0x35 => unreachable,
-            //
+            // SWAP (HL)
+            // 2  16
+            // Z 0 0 0
             0x36 => unreachable,
-            //
+            // SWAP A
+            // 2  8
+            // Z 0 0 0
             0x37 => unreachable,
-            //
+            // SRL B
+            // 2  8
+            // Z 0 0 C
             0x38 => unreachable,
-            //
+            // SRL C
+            // 2  8
+            // Z 0 0 C
             0x39 => unreachable,
-            //
+            // SRL D
+            // 2  8
+            // Z 0 0 C
             0x3A => unreachable,
-            //
+            // SRL E
+            // 2  8
+            // Z 0 0 C
             0x3B => unreachable,
-            //
+            // SRL H
+            // 2  8
+            // Z 0 0 C
             0x3C => unreachable,
-            //
+            // SRL L
+            // 2  8
+            // Z 0 0 C
             0x3D => unreachable,
-            //
+            // SRL (HL)
+            // 2  16
+            // Z 0 0 C
             0x3E => unreachable,
-            //
+            // SRL A
+            // 2  8
+            // Z 0 0 C
             0x3F => unreachable,
-            //
+            // BIT 0,B
+            // 2  8
+            // Z 0 1 -
             0x40 => unreachable,
-            //
+            // BIT 0,C
+            // 2  8
+            // Z 0 1 -
             0x41 => unreachable,
-            //
+            // BIT 0,D
+            // 2  8
+            // Z 0 1 -
             0x42 => unreachable,
-            //
+            // BIT 0,E
+            // 2  8
+            // Z 0 1 -
             0x43 => unreachable,
-            //
+            // BIT 0,H
+            // 2  8
+            // Z 0 1 -
             0x44 => unreachable,
-            //
+            // BIT 0,L
+            // 2  8
+            // Z 0 1 -
             0x45 => unreachable,
-            //
+            // BIT 0,(HL)
+            // 2  16
+            // Z 0 1 -
             0x46 => unreachable,
-            //
+            // BIT 0,A
+            // 2  8
+            // Z 0 1 -
             0x47 => unreachable,
-            //
+            // BIT 1,B
+            // 2  8
+            // Z 0 1 -
             0x48 => unreachable,
-            //
+            // BIT 1,C
+            // 2  8
+            // Z 0 1 -
             0x49 => unreachable,
-            //
+            // BIT 1,D
+            // 2  8
+            // Z 0 1 -
             0x4A => unreachable,
-            //
+            // BIT 1,E
+            // 2  8
+            // Z 0 1 -
             0x4B => unreachable,
-            //
+            // BIT 1,H
+            // 2  8
+            // Z 0 1 -
             0x4C => unreachable,
-            //
+            // BIT 1,L
+            // 2  8
+            // Z 0 1 -
             0x4D => unreachable,
-            //
+            // BIT 1,(HL)
+            // 2  16
+            // Z 0 1 -
             0x4E => unreachable,
-            //
+            // BIT 1,A
+            // 2  8
+            // Z 0 1 -
             0x4F => unreachable,
-            //
+            // BIT 2,B
+            // 2  8
+            // Z 0 1 -
             0x50 => unreachable,
-            //
+            // BIT 2,C
+            // 2  8
+            // Z 0 1 -
             0x51 => unreachable,
-            //
+            // BIT 2,D
+            // 2  8
+            // Z 0 1 -
             0x52 => unreachable,
-            //
+            // BIT 2,E
+            // 2  8
+            // Z 0 1 -
             0x53 => unreachable,
-            //
+            // BIT 2,H
+            // 2  8
+            // Z 0 1 -
             0x54 => unreachable,
-            //
+            // BIT 2,L
+            // 2  8
+            // Z 0 1 -
             0x55 => unreachable,
-            //
+            // BIT 2,(HL)
+            // 2  16
+            // Z 0 1 -
             0x56 => unreachable,
-            //
+            // BIT 2,A
+            // 2  8
+            // Z 0 1 -
             0x57 => unreachable,
-            //
+            // BIT 3,B
+            // 2  8
+            // Z 0 1 -
             0x58 => unreachable,
-            //
+            // BIT 3,C
+            // 2  8
+            // Z 0 1 -
             0x59 => unreachable,
-            //
+            // BIT 3,D
+            // 2  8
+            // Z 0 1 -
             0x5A => unreachable,
-            //
+            // BIT 3,E
+            // 2  8
+            // Z 0 1 -
             0x5B => unreachable,
-            //
+            // BIT 3,H
+            // 2  8
+            // Z 0 1 -
             0x5C => unreachable,
-            //
+            // BIT 3,L
+            // 2  8
+            // Z 0 1 -
             0x5D => unreachable,
-            //
+            // BIT 3,(HL)
+            // 2  16
+            // Z 0 1 -
             0x5E => unreachable,
-            //
+            // BIT 3,A
+            // 2  8
+            // Z 0 1 -
             0x5F => unreachable,
-            //
+            // BIT 4,B
+            // 2  8
+            // Z 0 1 -
             0x60 => unreachable,
-            //
+            // BIT 4,C
+            // 2  8
+            // Z 0 1 -
             0x61 => unreachable,
-            //
+            // BIT 4,D
+            // 2  8
+            // Z 0 1 -
             0x62 => unreachable,
-            //
+            // BIT 4,E
+            // 2  8
+            // Z 0 1 -
             0x63 => unreachable,
-            //
+            // BIT 4,H
+            // 2  8
+            // Z 0 1 -
             0x64 => unreachable,
-            //
+            // BIT 4,L
+            // 2  8
+            // Z 0 1 -
             0x65 => unreachable,
-            //
+            // BIT 4,(HL)
+            // 2  16
+            // Z 0 1 -
             0x66 => unreachable,
-            //
+            // BIT 4,A
+            // 2  8
+            // Z 0 1 -
             0x67 => unreachable,
-            //
+            // BIT 5,B
+            // 2  8
+            // Z 0 1 -
             0x68 => unreachable,
-            //
+            // BIT 5,C
+            // 2  8
+            // Z 0 1 -
             0x69 => unreachable,
-            //
+            // BIT 5,D
+            // 2  8
+            // Z 0 1 -
             0x6A => unreachable,
-            //
+            // BIT 5,E
+            // 2  8
+            // Z 0 1 -
             0x6B => unreachable,
-            //
+            // BIT 5,H
+            // 2  8
+            // Z 0 1 -
             0x6C => unreachable,
-            //
+            // BIT 5,L
+            // 2  8
+            // Z 0 1 -
             0x6D => unreachable,
-            //
+            // BIT 5,(HL)
+            // 2  16
+            // Z 0 1 -
             0x6E => unreachable,
-            //
+            // BIT 5,A
+            // 2  8
+            // Z 0 1 -
             0x6F => unreachable,
-            //
+            // BIT 6,B
+            // 2  8
+            // Z 0 1 -
             0x70 => unreachable,
-            //
+            // BIT 6,C
+            // 2  8
+            // Z 0 1 -
             0x71 => unreachable,
-            //
+            // BIT 6,D
+            // 2  8
+            // Z 0 1 -
             0x72 => unreachable,
-            //
+            // BIT 6,E
+            // 2  8
+            // Z 0 1 -
             0x73 => unreachable,
-            //
+            // BIT 6,H
+            // 2  8
+            // Z 0 1 -
             0x74 => unreachable,
-            //
+            // BIT 6,L
+            // 2  8
+            // Z 0 1 -
             0x75 => unreachable,
-            //
+            // BIT 6,(HL)
+            // 2  16
+            // Z 0 1 -
             0x76 => unreachable,
-            //
+            // BIT 6,A
+            // 2  8
+            // Z 0 1 -
             0x77 => unreachable,
-            //
+            // BIT 7,B
+            // 2  8
+            // Z 0 1 -
             0x78 => unreachable,
-            //
+            // BIT 7,C
+            // 2  8
+            // Z 0 1 -
             0x79 => unreachable,
-            //
+            // BIT 7,D
+            // 2  8
+            // Z 0 1 -
             0x7A => unreachable,
-            //
+            // BIT 7,E
+            // 2  8
+            // Z 0 1 -
             0x7B => unreachable,
-            //
+            // BIT 7,H
+            // 2  8
+            // Z 0 1 -
             0x7C => unreachable,
-            //
+            // BIT 7,L
+            // 2  8
+            // Z 0 1 -
             0x7D => unreachable,
-            //
+            // BIT 7,(HL)
+            // 2  16
+            // Z 0 1 -
             0x7E => unreachable,
-            //
+            // BIT 7,A
+            // 2  8
+            // Z 0 1 -
             0x7F => unreachable,
-            //
+            // RES 0,B
+            // 2  8
+            // - - - -
             0x80 => unreachable,
-            //
+            // RES 0,C
+            // 2  8
+            // - - - -
             0x81 => unreachable,
-            //
+            // RES 0,D
+            // 2  8
+            // - - - -
             0x82 => unreachable,
-            //
+            // RES 0,E
+            // 2  8
+            // - - - -
             0x83 => unreachable,
-            //
+            // RES 0,H
+            // 2  8
+            // - - - -
             0x84 => unreachable,
-            //
+            // RES 0,L
+            // 2  8
+            // - - - -
             0x85 => unreachable,
-            //
+            // RES 0,(HL)
+            // 2  16
+            // - - - -
             0x86 => unreachable,
-            //
+            // RES 0,A
+            // 2  8
+            // - - - -
             0x87 => unreachable,
-            //
+            // RES 1,B
+            // 2  8
+            // - - - -
             0x88 => unreachable,
-            //
+            // RES 1,C
+            // 2  8
+            // - - - -
             0x89 => unreachable,
-            //
+            // RES 1,D
+            // 2  8
+            // - - - -
             0x8A => unreachable,
-            //
+            // RES 1,E
+            // 2  8
+            // - - - -
             0x8B => unreachable,
-            //
+            // RES 1,H
+            // 2  8
+            // - - - -
             0x8C => unreachable,
-            //
+            // RES 1,L
+            // 2  8
+            // - - - -
             0x8D => unreachable,
-            //
+            // RES 1,(HL)
+            // 2  16
+            // - - - -
             0x8E => unreachable,
-            //
+            // RES 1,A
+            // 2  8
+            //- - - -
             0x8F => unreachable,
-            //
+            // RES 2,B
+            // 2  8
+            // - - - -
             0x90 => unreachable,
-            //
+            // RES 2,C
+            // 2  8
+            // - - - -
             0x91 => unreachable,
-            //
+            // RES 2,D
+            // 2  8
+            // - - - -
             0x92 => unreachable,
-            //
+            // RES 2,E
+            // 2  8
+            // - - - -
             0x93 => unreachable,
-            //
+            // RES 2,H
+            // 2  8
+            // - - - -
             0x94 => unreachable,
-            //
+            // RES 2,L
+            // 2  8
+            // - - - -
             0x95 => unreachable,
-            //
+            // RES 2,(HL)
+            // 2  16
+            // - - - -
             0x96 => unreachable,
-            //
+            // RES 2,A
+            // 2  8
+            // - - - -
             0x97 => unreachable,
-            //
+            // RES 3,B
+            // 2  8
+            // - - - -
             0x98 => unreachable,
-            //
+            // RES 3,C
+            // 2  8
+            // - - - -
             0x99 => unreachable,
-            //
+            // RES 3,D
+            // 2  8
+            // - - - -
             0x9A => unreachable,
-            //
+            // RES 3,E
+            // 2  8
+            // - - - -
             0x9B => unreachable,
-            //
+            // RES 3,H
+            // 2  8
+            // - - - -
             0x9C => unreachable,
-            //
+            // RES 3,L
+            // 2  8
+            // - - - -
             0x9D => unreachable,
-            //
+            // RES 3,(HL)
+            // 2  16
+            // - - - -
             0x9E => unreachable,
-            //
+            // RES 3,A
+            // 2  8
+            // - - - -
             0x9F => unreachable,
-            //
+            // RES 4,B
+            // 2  8
+            // - - - -
             0xA0 => unreachable,
-            //
+            // RES 4,C
+            // 2  8
+            // - - - -
             0xA1 => unreachable,
-            //
+            // RES 4,D
+            // 2  8
+            // - - - -
             0xA2 => unreachable,
-            //
+            // RES 4,E
+            // 2  8
+            // - - - -
             0xA3 => unreachable,
-            //
+            // RES 4,H
+            // 2  8
+            // - - - -
             0xA4 => unreachable,
-            //
+            // RES 4,L
+            // 2  8
+            // - - - -
             0xA5 => unreachable,
-            //
+            // RES 4,(HL)
+            // 2  16
+            // - - - -
             0xA6 => unreachable,
-            //
+            // RES 4,A
+            // 2  8
+            // - - - -
             0xA7 => unreachable,
-            //
+            // RES 5,B
+            // 2  8
+            // - - - -
             0xA8 => unreachable,
-            //
+            // RES 5,C
+            // 2  8
+            // - - - -
             0xA9 => unreachable,
-            //
+            // RES 5,D
+            // 2  8
+            // - - - -
             0xAA => unreachable,
-            //
+            // RES 5,E
+            // 2  8
+            // - - - -
             0xAB => unreachable,
-            //
+            // RES 5,H
+            // 2  8
+            // - - - -
             0xAC => unreachable,
-            //
+            // RES 5,L
+            // 2  8
+            // - - - -
             0xAD => unreachable,
-            //
+            // RES 5,(HL)
+            // 2  16
+            // - - - -
             0xAE => unreachable,
-            //
+            // RES 5,A
+            // 2  8
+            // - - - -
             0xAF => unreachable,
-            //
+            // RES 6,B
+            // 2  8
+            // - - - -
             0xB0 => unreachable,
-            //
+            // RES 6,C
+            // 2  8
+            // - - - -
             0xB1 => unreachable,
-            //
+            // RES 6,D
+            // 2  8
+            // - - - -
             0xB2 => unreachable,
-            //
+            // RES 6,E
+            // 2  8
+            // - - - -
             0xB3 => unreachable,
-            //
+            // RES 6,H
+            // 2  8
+            // - - - -
             0xB4 => unreachable,
-            //
+            // RES 6,L
+            // 2  8
+            // - - - -
             0xB5 => unreachable,
-            //
+            // RES 6,(HL)
+            // 2  16
+            // - - - -
             0xB6 => unreachable,
-            //
+            // RES 6,A
+            // 2  8
+            // - - - -
             0xB7 => unreachable,
-            //
+            // RES 7,B
+            // 2  8
+            // - - - -
             0xB8 => unreachable,
-            //
+            // RES 7,C
+            // 2  8
+            // - - - -
             0xB9 => unreachable,
-            //
+            // RES 7,D
+            // 2  8
+            // - - - -
             0xBA => unreachable,
-            //
+            // RES 7,E
+            // 2  8
+            // - - - -
             0xBB => unreachable,
-            //
+            // RES 7,H
+            // 2  8
+            // - - - -
             0xBC => unreachable,
-            //
+            // RES 7,L
+            // 2  8
+            // - - - -
             0xBD => unreachable,
-            //
+            // RES 7,(HL)
+            // 2  16
+            // - - - -
             0xBE => unreachable,
-            //
+            // RES 7,A
+            // 2  8
+            // - - - -
             0xBF => unreachable,
-            //
+            // SET 0,B
+            // 2  8
+            // - - - -
             0xC0 => unreachable,
-            //
+            // SET 0,C
+            // 2  8
+            // - - - -
             0xC1 => unreachable,
-            //
+            // SET 0,D
+            // 2  8
+            // - - - -
             0xC2 => unreachable,
-            //
+            // SET 0,E
+            // 2  8
+            // - - - -
             0xC3 => unreachable,
-            //
+            // SET 0,H
+            // 2  8
+            // - - - -
             0xC4 => unreachable,
-            //
+            // SET 0,L
+            // 2  8
+            // - - - -
             0xC5 => unreachable,
-            //
+            // SET 0,(HL)
+            // 2  16
+            // - - - -
             0xC6 => unreachable,
-            //
+            // SET 0,A
+            // 2  8
+            // - - - -
             0xC7 => unreachable,
-            //
+            // SET 1,B
+            // 2  8
+            // - - - -
             0xC8 => unreachable,
-            //
+            // SET 1,C
+            // 2  8
+            // - - - -
             0xC9 => unreachable,
-            //
+            // SET 1,D
+            // 2  8
+            // - - - -
             0xCA => unreachable,
-            //
+            // SET 1,E
+            // 2  8
+            // - - - -
             0xCB => unreachable,
-            //
+            // SET 1,H
+            // 2  8
+            // - - - -
             0xCC => unreachable,
-            //
+            // SET 1,L
+            // 2  8
+            // - - - -
             0xCD => unreachable,
-            //
+            // SET 1,(HL)
+            // 2  16
+            // - - - -
             0xCE => unreachable,
-            //
+            // SET 1,A
+            // 2  8
+            // - - - -
             0xCF => unreachable,
-            //
+            // SET 2,B
+            // 2  8
+            // - - - -
             0xD0 => unreachable,
-            //
+            // SET 2,C
+            // 2  8
+            // - - - -
             0xD1 => unreachable,
-            //
+            // SET 2,D
+            // 2  8
+            // - - - -
             0xD2 => unreachable,
-            //
+            // SET 2,E
+            // 2  8
+            // - - - -
             0xD3 => unreachable,
-            //
+            // SET 2,H
+            // 2  8
+            //- - - -
             0xD4 => unreachable,
-            //
+            // SET 2,L
+            // 2  8
+            // - - - -
             0xD5 => unreachable,
-            //
+            // SET 2,(HL)
+            // 2  16
+            // - - - -
             0xD6 => unreachable,
-            //
+            // SET 2,A
+            // 2  8
+            // - - - -
             0xD7 => unreachable,
-            //
+            // SET 3,B
+            // 2  8
+            // - - - -
             0xD8 => unreachable,
-            //
+            // SET 3,C
+            // 2  8
+            // - - - -
             0xD9 => unreachable,
-            //
+            // SET 3,D
+            // 2  8
+            // - - - -
             0xDA => unreachable,
-            //
+            // SET 3,E
+            // 2  8
+            // - - - -
             0xDB => unreachable,
-            //
+            // SET 3,H
+            // 2  8
+            // - - - -
             0xDC => unreachable,
-            //
+            // SET 3,L
+            // 2  8
+            // - - - -
             0xDD => unreachable,
-            //
+            // SET 3,(HL)
+            // 2  16
+            // - - - -
             0xDE => unreachable,
-            //
+            // SET 3,A
+            // 2  8
+            // - - - -
             0xDF => unreachable,
-            //
+            // SET 4,B
+            // 2  8
+            //- - - -
             0xE0 => unreachable,
-            //
+            // SET 4,C
+            // 2  8
+            // - - - -
             0xE1 => unreachable,
-            //
+            // SET 4,D
+            // 2  8
+            // - - - -
             0xE2 => unreachable,
-            //
+            // SET 4,E
+            // 2  8
+            // - - - -
             0xE3 => unreachable,
-            //
+            // SET 4,H
+            // 2  8
+            // - - - -
             0xE4 => unreachable,
-            //
+            // SET 4,L
+            // 2  8
+            // - - - -
             0xE5 => unreachable,
-            //
+            // SET 4,(HL)
+            // 2  16
+            // - - - -
             0xE6 => unreachable,
-            //
+            // SET 4,A
+            // 2  8
+            // - - - -
             0xE7 => unreachable,
-            //
+            // SET 5,B
+            // 2  8
+            // - - - -
             0xE8 => unreachable,
-            //
+            // SET 5,C
+            // 2  8
+            // - - - -
             0xE9 => unreachable,
-            //
+            // SET 5,D
+            // 2  8
+            // - - - -
             0xEA => unreachable,
-            //
+            // SET 5,E
+            // 2  8
+            // - - - -
             0xEB => unreachable,
-            //
+            // SET 5,H
+            // 2  8
+            // - - - -
             0xEC => unreachable,
-            //
+            // SET 5,L
+            // 2  8
+            // - - - -
             0xED => unreachable,
-            //
+            // SET 5,(HL)
+            // 2  16
+            // - - - -
             0xEE => unreachable,
-            //
+            // SET 5,A
+            // 2  8
+            // - - - -
             0xEF => unreachable,
-            //
+            // SET 6,B
+            // 2  8
+            // - - - -
             0xF0 => unreachable,
-            //
+            // SET 6,C
+            // 2  8
+            //- - - -
             0xF1 => unreachable,
-            //
+            // SET 6,D
+            // 2  8
+            // - - - -
             0xF2 => unreachable,
-            //
+            // SET 6,E
+            // 2  8
+            // - - - -
             0xF3 => unreachable,
-            //
+            // SET 6,H
+            // 2  8
+            // - - - -
             0xF4 => unreachable,
-            //
+            // SET 6,L
+            //2  8
+            // - - - -
             0xF5 => unreachable,
-            //
+            // SET 6,(HL)
+            // 2  16
+            // - - - -
             0xF6 => unreachable,
-            //
+            // SET 6,A
+            // 2  8
+            // - - - -
             0xF7 => unreachable,
-            //
+            // SET 7,B
+            // 2  8
+            // - - - -
             0xF8 => unreachable,
-            //
+            // SET 7,C
+            // 2  8
+            // - - - -
             0xF9 => unreachable,
-            //
+            // SET 7,D
+            // 2  8
+            // - - - -
             0xFA => unreachable,
-            //
+            // SET 7,E
+            // 2  8
+            // - - - -
             0xFB => unreachable,
-            //
+            // SET 7,H
+            // 2  8
+            // - - - -
             0xFC => unreachable,
-            //
+            // SET 7,L
+            // 2  8
+            // - - - -
             0xFD => unreachable,
-            //
+            // SET 7,(HL)
+            // 2  16
+            // - - - -
             0xFE => unreachable,
-            //
+            // SET 7,A
+            // 2  8
+            // - - - -
             0xFF => unreachable,
         },
         // CALL Z,a16
