@@ -1,5 +1,6 @@
 const std = @import("std");
 const st = @import("state.zig");
+const regs = st.Regs;
 const insn = @import("instructions.zig");
 
 // Execute the instruction pointed to by the PC register
@@ -698,35 +699,35 @@ pub fn executeAt(address: u16, state: *st.State, rom_data: []u8) void {
         // XOR B
         // 1  4
         // Z 0 0 0
-        0xA8 => unreachable,
+        0xA8 => instruction.xor(regs.B, false),
         // XOR C
         // 1  4
         // Z 0 0 0
-        0xA9 => unreachable,
+        0xA9 => instruction.xor(regs.C, false),
         // XOR D
         // 1  4
         // Z 0 0 0
-        0xAA => unreachable,
+        0xAA => instruction.xor(regs.D, false),
         // XOR E
         // 1  4
         // Z 0 0 0
-        0xAB => unreachable,
+        0xAB => instruction.xor(regs.E, false),
         // XOR H
         // 1  4
         // Z 0 0 0
-        0xAC => unreachable,
+        0xAC => instruction.xor(regs.H, false),
         // XOR L
         // 1  4
         // Z 0 0 0
-        0xAD => unreachable,
+        0xAD => instruction.xor(regs.L, false),
         // XOR (HL)
         // 1  8
         // Z 0 0 0
-        0xAE => unreachable,
+        0xAE => instruction.xor(regs.HL, true),
         // XOR A
         // 1  4
         // Z 0 0 0
-        0xAF => unreachable,
+        0xAF => instruction.xor(regs.A, false),
         // OR B
         // 1  4
         // Z 0 0 0

@@ -4,6 +4,24 @@ const cartHeader = @import("cartHeader.zig");
 pub const Regs = enum { AF, A, BC, B, C, DE, D, E, HL, H, L, SP, PC };
 pub const Flags = enum { Z, N, H, C };
 
+pub fn printReg(reg: Regs) void {
+    switch (reg) {
+        Regs.AF => std.debug.print("AF", .{}),
+        Regs.A => std.debug.print("A", .{}),
+        Regs.BC => std.debug.print("BC", .{}),
+        Regs.B => std.debug.print("B", .{}),
+        Regs.C => std.debug.print("C", .{}),
+        Regs.DE => std.debug.print("DE", .{}),
+        Regs.D => std.debug.print("D", .{}),
+        Regs.E => std.debug.print("E", .{}),
+        Regs.HL => std.debug.print("HL", .{}),
+        Regs.H => std.debug.print("H", .{}),
+        Regs.L => std.debug.print("L", .{}),
+        Regs.SP => std.debug.print("SP", .{}),
+        Regs.PC => std.debug.print("PC", .{}),
+    }
+}
+
 pub const State = struct {
     memory: [0x10000]u8,
     reg_AF: u16,
@@ -24,6 +42,10 @@ pub const State = struct {
             Regs.L => true,
             else => false,
         };
+    }
+
+    pub fn resetFlags(self: *State) void {
+        self.reg_AF = self.reg_AF & 0xFF0F;
     }
 
     pub fn setFlag(self: *State, flag: Flags, val: bool) void {
