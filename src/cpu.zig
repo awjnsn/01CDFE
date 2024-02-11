@@ -31,7 +31,7 @@ pub fn executeAt(address: u16, state: *st.State, rom_data: []u8) void {
         // LD BC,d16
         // 3  12
         // - - - -
-        0x01 => unreachable,
+        0x01 => instruction.ldImm16(regs.BC, d16),
         // LD (BC),A
         // 1  8
         // - - - -
@@ -95,7 +95,7 @@ pub fn executeAt(address: u16, state: *st.State, rom_data: []u8) void {
         // LD DE,d16
         // 3  12
         // - - - -
-        0x11 => unreachable,
+        0x11 => instruction.ldImm16(regs.DE, d16),
         // LD (DE),A
         // 1  8
         // - - - -
@@ -159,7 +159,7 @@ pub fn executeAt(address: u16, state: *st.State, rom_data: []u8) void {
         // LD HL,d16
         // 3  12
         // - - - -
-        0x21 => unreachable,
+        0x21 => instruction.ldImm16(regs.HL, d16),
         // LD (HL+),A
         // 1  8
         // - - - -
@@ -223,7 +223,7 @@ pub fn executeAt(address: u16, state: *st.State, rom_data: []u8) void {
         // LD SP,d16
         // 3  12
         // - - - -
-        0x31 => unreachable,
+        0x31 => instruction.ldImm16(regs.SP, d16),
         // LD (HL-),A
         // 1  8
         // - - - -

@@ -11,11 +11,13 @@ pub const Instruction = struct {
     }
 
     pub fn jp(self: *const Instruction, address: u16) u8 {
+        self.state.resetFlags();
         self.state.setReg(regs.PC, address);
         return 16;
     }
 
     pub fn nop(self: *const Instruction) u8 {
+        self.state.resetFlags();
         std.debug.print("NOP\n", .{});
         self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 1);
         return 4;
@@ -45,5 +47,15 @@ pub const Instruction = struct {
         self.state.setFlag(flags.Z, res == 0);
         self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 1);
         return 4;
+    }
+
+    pub fn ldImm16(self: *const Instruction, reg: regs, imm: u16) u8 {
+        self.state.resetFlags();
+        std.debug.print("LD ", .{});
+        st.printReg(reg);
+        std.debug.print(", 0x{x}\n", .{imm});
+        self.state.setReg(reg, imm);
+        self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 1);
+        return 12;
     }
 };
