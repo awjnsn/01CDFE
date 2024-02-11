@@ -23,6 +23,7 @@ pub fn printReg(reg: Regs) void {
 }
 
 pub const State = struct {
+    rom_data: []u8,
     memory: [0x10000]u8,
     reg_AF: u16,
     reg_BC: u16,
@@ -107,6 +108,7 @@ pub const State = struct {
 
     pub fn init() State {
         return State{
+            .rom_data = undefined,
             .memory = [_]u8{0} ** 0x10000,
             .reg_AF = 0x0000,
             .reg_BC = 0,
@@ -118,8 +120,10 @@ pub const State = struct {
     }
 
     pub fn mapMemory(self: *State, rom_data: []u8, mapper: cartHeader.Mapper) void {
+        // Save this pointer for later remapping stuff
+        self.rom_data = rom_data;
         switch (mapper) {
-            cartHeader.Mapper.ROM_ONLY => std.mem.copyForwards(u8, &self.memory, rom_data),
+            cartHeader.Mapper.ROM_ONLY => std.mem.copyForwards(u8, &self.memory, self.rom_data),
             else => std.debug.print("Unsupported!\n", .{}),
         }
         std.debug.print("Mapping {d} bytes\n", .{rom_data.len});

@@ -23,9 +23,10 @@ pub fn main() !void {
     st.mapMemory(rom_data, header.getMapper());
 
     while (true) {
-        try st.pp(stdout);
-        cpu.execute(&st, rom_data);
-        try st.pp(stdout);
+        //try st.pp(stdout);
+        std.debug.print("@PC=${X}:\t", .{st.getReg(state.Regs.PC)});
+        cpu.execute(&st);
+        //try st.pp(stdout);
         try bw.flush();
     }
 }
