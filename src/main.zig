@@ -24,9 +24,9 @@ pub fn main() !void {
 
     while (true) {
         //try st.pp(stdout);
-        std.debug.print("@PC=${X}:\t", .{st.getReg(state.Regs.PC)});
+        std.debug.print("\u{001B}[1m@PC=${X}:\u{001B}[0m\t", .{st.getReg(state.Regs.PC)});
         cpu.execute(&st);
-        //try st.pp(stdout);
+        try st.pp(stdout);
         try bw.flush();
     }
 }

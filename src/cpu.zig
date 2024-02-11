@@ -14,11 +14,11 @@ pub fn executeAt(address: u16, state: *st.State) void {
 
     const instruction: insn.Instruction = insn.Instruction.init(state);
     const cb_insn: u8 = if (address + 1 < state.memory.len) state.memory[address + 1] else undefined;
-    //const d8: u8 = if (address + 1 < state.memory.len) state.memory[address + 1] else undefined;
+    const d8: u8 = if (address + 1 < state.memory.len) state.memory[address + 1] else undefined;
     const d16: u16 = if (address + 2 < state.memory.len) (@as(u16, state.memory[address + 2]) << 8) + state.memory[address + 1] else undefined;
     //const a8: u8 = if (address + 1 < state.memory.len) state.memory[address + 1] else undefined;
     const a16: u16 = if (address + 2 < state.memory.len) (@as(u16, state.memory[address + 2]) << 8) + state.memory[address + 1] else undefined;
-    //const r8: u8 = if (address + 1 < state.memory.len) state.memory[address + 1] else undefined;
+    //const r8: i8 = if (address + 1 < state.memory.len) state.memory[address + 1] else undefined;
 
     //std.debug.print("cb_insn: 0x{x} d8: 0x{x} d16: 0x{x} a8: 0x{x} a16: 0x{x} r8: 0x{x}\n", .{ cb_insn, d8, d16, a8, a16, r8 });
 
@@ -51,7 +51,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // LD B,d8
         // 2  8
         // - - - -
-        0x06 => unreachable,
+        0x06 => instruction.ldImm8(regs.B, d8, false),
         // RLCA
         // 1  4
         // 0 0 0 C
@@ -83,7 +83,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // LD C,d8
         // 2  8
         // - - - -
-        0x0E => unreachable,
+        0x0E => instruction.ldImm8(regs.C, d8, false),
         // RRCA
         // 1  4
         // 0 0 0 C
@@ -115,7 +115,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // LD D,d8
         // 2  8
         // - - - -
-        0x16 => unreachable,
+        0x16 => instruction.ldImm8(regs.D, d8, false),
         // RLA
         // 1  4
         // 0 0 0 C
@@ -147,7 +147,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // LD E,d8
         // 2  8
         // - - - -
-        0x1E => unreachable,
+        0x1E => instruction.ldImm8(regs.E, d8, false),
         // RRA
         // 1  4
         // 0 0 0 C
@@ -179,7 +179,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // LD H,d8
         // 2  8
         // - - - -
-        0x26 => unreachable,
+        0x26 => instruction.ldImm8(regs.H, d8, false),
         // DAA
         // 1  4
         // Z - 0 C
@@ -211,7 +211,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // LD L,d8
         // 2  8
         // - - - -
-        0x2E => unreachable,
+        0x2E => instruction.ldImm8(regs.L, d8, false),
         // CPL
         // 1  4
         // - 1 1 -
@@ -243,7 +243,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // LD (HL),d8
         // 2  12
         // - - - -
-        0x36 => unreachable,
+        0x36 => instruction.ldImm8(regs.HL, d8, true),
         // SCF
         // 1  4
         // - 0 0 1
@@ -275,7 +275,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // LD A,d8
         // 2  8
         // - - - -
-        0x3E => unreachable,
+        0x3E => instruction.ldImm8(regs.A, d8, false),
         // CCF
         // 1  4
         // - 0 0 C

@@ -59,4 +59,21 @@ pub const Instruction = struct {
         self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 3);
         return 12;
     }
+
+    pub fn ldImm8(self: *const Instruction, reg: regs, imm: u8, deref: bool) u8 {
+        self.state.resetFlags();
+        std.debug.print("LD ", .{});
+        if (deref) {
+            std.debug.print("(", .{});
+            st.printReg(reg);
+            std.debug.print(")", .{});
+            self.state.memory[self.state.getReg(reg)] = imm;
+        } else {
+            st.printReg(reg);
+            self.state.setReg(reg, imm);
+        }
+        std.debug.print(" ${X}\n", .{imm});
+        self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 2);
+        return if (deref) 12 else 8;
+    }
 };
