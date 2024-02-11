@@ -56,7 +56,7 @@ pub const Instruction = struct {
         st.printReg(reg);
         std.debug.print(", ${X}\n", .{imm});
         self.state.setReg(reg, imm);
-        self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 1);
+        self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 3);
         return 12;
     }
 };
