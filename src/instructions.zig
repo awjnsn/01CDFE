@@ -76,4 +76,52 @@ pub const Instruction = struct {
         self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 2);
         return if (deref) 12 else 8;
     }
+
+    pub fn ldReg(self: *const Instruction, dst: regs, src: regs, derefDst: bool, derefSrc: bool, incDst: bool, decDst: bool) u8 {
+        self.state.resetFlags();
+        std.debug.print("LD ", .{});
+        if (derefDst) {
+            std.debug.print("(", .{});
+            st.printReg(dst);
+            if(incDst) {
+                std.debug.print("+", .{});
+            } else if(decDst) {
+                std.debug.print("-", .{});
+            }
+            std.debug.print(")", .{});
+        } else {
+            st.printReg(dst);
+        }
+        std.debug.print(", ", .{});
+        var srcVal: u8 = undefined;
+        if (derefSrc) {
+            std.debug.print("(", .{});
+            st.printReg(src);
+            std.debug.print(")", .{});
+            srcVal = self.state.memory[self.state.getReg(src)];
+        }
+        else {
+            st.printReg(src);
+            srcVal = @truncate(self.state.getReg(src));
+        }
+
+        std.debug.print("\n", .{});
+
+        if (derefDst) {
+            self.state.memory[self.state.getReg(dst)] = srcVal;
+        } else {
+            self.state.setReg(dst, @as(u16, srcVal));
+        }
+
+        if(incDst) {
+            self.state.setReg(dst, self.state.getReg(dst) + 1);
+        } else if (decDst) {
+            self.state.setReg(dst, self.state.getReg(dst) - 1);
+        }
+
+
+        self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 1);
+        return if (derefDst or derefSrc) 8 else 4;
+    }
+
 };

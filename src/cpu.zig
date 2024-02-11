@@ -35,7 +35,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // LD (BC),A
         // 1  8
         // - - - -
-        0x02 => unreachable,
+        0x02 => instruction.ldReg(regs.BC, regs.A, true, false, false, false),
         // INC BC
         // 1  8
         // - - - -
@@ -99,7 +99,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // LD (DE),A
         // 1  8
         // - - - -
-        0x12 => unreachable,
+        0x12 => instruction.ldReg(regs.DE, regs.A, true, false, false, false),
         // INC DE
         // 1  8
         // - - - -
@@ -163,7 +163,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // LD (HL+),A
         // 1  8
         // - - - -
-        0x22 => unreachable,
+        0x22 => instruction.ldReg(regs.HL, regs.A, true, false, true, false),
         // INC HL
         // 1  8
         // - - - -
@@ -227,7 +227,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // LD (HL-),A
         // 1  8
         // - - - -
-        0x32 => unreachable,
+        0x32 => instruction.ldReg(regs.HL, regs.A, true, false, false, true),
         // INC SP
         // 1  8
         // - - - -
@@ -283,219 +283,219 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // LD B,B
         // 1  4
         // - - - -
-        0x40 => unreachable,
+        0x40 => instruction.ldReg(regs.B, regs.B, false, false, false, false),
         // LD B,C
         // 1  4
         // - - - -
-        0x41 => unreachable,
+        0x41 => instruction.ldReg(regs.B, regs.C, false, false, false, false),
         // LD B,D
         // 1  4
         // - - - -
-        0x42 => unreachable,
+        0x42 => instruction.ldReg(regs.B, regs.D, false, false, false, false),
         // LD B,E
         // 1  4
         // - - - -
-        0x43 => unreachable,
+        0x43 => instruction.ldReg(regs.B, regs.E, false, false, false, false),
         // LD B,H
         // 1  4
         // - - - -
-        0x44 => unreachable,
+        0x44 => instruction.ldReg(regs.B, regs.H, false, false, false, false),
         // LD B,L
         // 1  4
         // - - - -
-        0x45 => unreachable,
+        0x45 => instruction.ldReg(regs.B, regs.L, false, false, false, false),
         // LD B,(HL)
         // 1  8
         // - - - -
-        0x46 => unreachable,
+        0x46 => instruction.ldReg(regs.B, regs.HL, false, true, false, false),
         // LD B,A
         // 1  4
         // - - - -
-        0x47 => unreachable,
+        0x47 => instruction.ldReg(regs.B, regs.A, false, false, false, false),
         // LD C,B
         // 1  4
         // - - - -
-        0x48 => unreachable,
+        0x48 => instruction.ldReg(regs.C, regs.B, false, false, false, false),
         // LD C,C
         // 1  4
         // - - - -
-        0x49 => unreachable,
+        0x49 => instruction.ldReg(regs.C, regs.C, false, false, false, false),
         // LD C,D
         // 1  4
         // - - - -
-        0x4A => unreachable,
+        0x4A => instruction.ldReg(regs.C, regs.D, false, false, false, false),
         // LD C,E
         // 1  4
         // - - - -
-        0x4B => unreachable,
+        0x4B => instruction.ldReg(regs.C, regs.E, false, false, false, false),
         // LD C,H
         // 1  4
         // - - - -
-        0x4C => unreachable,
+        0x4C => instruction.ldReg(regs.C, regs.H, false, false, false, false),
         // LD C,L
         // 1  4
         // - - - -
-        0x4D => unreachable,
+        0x4D => instruction.ldReg(regs.C, regs.L, false, false, false, false),
         // LD C,(HL)
         // 1  8
         // - - - -
-        0x4E => unreachable,
+        0x4E => instruction.ldReg(regs.C, regs.HL, false, true, false, false),
         // LD C,A
         // 1  4
         // - - - -
-        0x4F => unreachable,
+        0x4F => instruction.ldReg(regs.C, regs.A, false, false, false, false),
         // LD D,B
         // 1  4
         // - - - -
-        0x50 => unreachable,
+        0x50 => instruction.ldReg(regs.D, regs.B, false, false, false, false),
         // LD D,C
         // 1  4
         // - - - -
-        0x51 => unreachable,
+        0x51 => instruction.ldReg(regs.D, regs.C, false, false, false, false),
         // LD D,D
         // 1  4
         // - - - -
-        0x52 => unreachable,
+        0x52 => instruction.ldReg(regs.D, regs.D, false, false, false, false),
         // LD D,E
         // 1  4
         // - - - -
-        0x53 => unreachable,
+        0x53 => instruction.ldReg(regs.D, regs.E, false, false, false, false),
         // LD D,H
         // 1  4
         // - - - -
-        0x54 => unreachable,
+        0x54 => instruction.ldReg(regs.D, regs.H, false, false, false, false),
         // LD D,L
         // 1  4
         // - - - -
-        0x55 => unreachable,
+        0x55 => instruction.ldReg(regs.D, regs.L, false, false, false, false),
         // LD D,(HL)
         // 1  8
         // - - - -
-        0x56 => unreachable,
+        0x56 => instruction.ldReg(regs.D, regs.HL, false, true, false, false),
         // LD D,A
         // 1  4
         // - - - -
-        0x57 => unreachable,
+        0x57 => instruction.ldReg(regs.D, regs.A, false, false, false, false),
         // LD E,B
         // 1  4
         // - - - -
-        0x58 => unreachable,
+        0x58 => instruction.ldReg(regs.E, regs.B, false, false, false, false),
         // LD E,C
         // 1  4
         // - - - -
-        0x59 => unreachable,
+        0x59 => instruction.ldReg(regs.E, regs.C, false, false, false, false),
         // LD E,D
         // 1  4
         // - - - -
-        0x5A => unreachable,
+        0x5A => instruction.ldReg(regs.E, regs.D, false, false, false, false),
         // LD E,E
         // 1  4
         // - - - -
-        0x5B => unreachable,
+        0x5B => instruction.ldReg(regs.E, regs.E, false, false, false, false),
         // LD E,H
         // 1  4
         // - - - -
-        0x5C => unreachable,
+        0x5C => instruction.ldReg(regs.E, regs.H, false, false, false, false),
         // LD E,L
         // 1  4
         // - - - -
-        0x5D => unreachable,
+        0x5D => instruction.ldReg(regs.E, regs.L, false, false, false, false),
         // LD E,(HL)
         // 1  8
         // - - - -
-        0x5E => unreachable,
+        0x5E => instruction.ldReg(regs.E, regs.HL, false, true, false, false),
         // LD E,A
         // 1  4
         // - - - -
-        0x5F => unreachable,
+        0x5F => instruction.ldReg(regs.E, regs.A, false, false, false, false),
         // LD H,B
         // 1  4
         // - - - -
-        0x60 => unreachable,
+        0x60 => instruction.ldReg(regs.H, regs.B, false, false, false, false),
         // LD H,C
         // 1  4
         // - - - -
-        0x61 => unreachable,
+        0x61 => instruction.ldReg(regs.H, regs.C, false, false, false, false),
         // LD H,D
         // 1  4
         // - - - -
-        0x62 => unreachable,
+        0x62 => instruction.ldReg(regs.H, regs.D, false, false, false, false),
         // LD H,E
         // 1  4
         // - - - -
-        0x63 => unreachable,
+        0x63 => instruction.ldReg(regs.H, regs.E, false, false, false, false),
         // LD H,H
         // 1  4
         // - - - -
-        0x64 => unreachable,
+        0x64 => instruction.ldReg(regs.H, regs.H, false, false, false, false),
         // LD H,L
         // 1  4
         // - - - -
-        0x65 => unreachable,
+        0x65 => instruction.ldReg(regs.H, regs.L, false, false, false, false),
         // LD H,(HL)
         // 1  8
         // - - - -
-        0x66 => unreachable,
+        0x66 => instruction.ldReg(regs.H, regs.HL, false, true, false, false),
         // LD H,A
         // 1  4
         // - - - -
-        0x67 => unreachable,
+        0x67 => instruction.ldReg(regs.H, regs.A, false, false, false, false),
         // LD L,B
         // 1  4
         // - - - -
-        0x68 => unreachable,
+        0x68 => instruction.ldReg(regs.L, regs.B, false, false, false, false),
         // LD L,C
         // 1  4
         // - - - -
-        0x69 => unreachable,
+        0x69 => instruction.ldReg(regs.L, regs.C, false, false, false, false),
         // LD L,D
         // 1  4
         // - - - -
-        0x6A => unreachable,
+        0x6A => instruction.ldReg(regs.L, regs.D, false, false, false, false),
         // LD L,E
         // 1  4
         // - - - -
-        0x6B => unreachable,
+        0x6B => instruction.ldReg(regs.L, regs.E, false, false, false, false),
         // LD L,H
         // 1  4
         // - - - -
-        0x6C => unreachable,
+        0x6C => instruction.ldReg(regs.L, regs.H, false, false, false, false),
         // LD L,L
         // 1  4
         // - - - -
-        0x6D => unreachable,
+        0x6D => instruction.ldReg(regs.L, regs.L, false, false, false, false),
         // LD L,(HL)
         // 1  8
         // - - - -
-        0x6E => unreachable,
+        0x6E => instruction.ldReg(regs.L, regs.HL, false, true, false, false),
         // LD L,A
         // 1  4
         // - - - -
-        0x6F => unreachable,
+        0x6F => instruction.ldReg(regs.L, regs.A, false, false, false, false),
         // LD (HL),B
         // 1  8
         // - - - -
-        0x70 => unreachable,
+        0x70 => instruction.ldReg(regs.HL, regs.B, true, false, false, false),
         // LD (HL),C
         // 1  8
         // - - - -
-        0x71 => unreachable,
+        0x71 => instruction.ldReg(regs.HL, regs.C, true, false, false, false),
         // LD (HL),D
         // 1  8
         // - - - -
-        0x72 => unreachable,
+        0x72 => instruction.ldReg(regs.HL, regs.D, true, false, false, false),
         // LD (HL),E
         // 1  8
         // - - - -
-        0x73 => unreachable,
+        0x73 => instruction.ldReg(regs.HL, regs.E, true, false, false, false),
         // LD (HL),H
         // 1  8
         // - - - -
-        0x74 => unreachable,
+        0x74 => instruction.ldReg(regs.HL, regs.H, true, false, false, false),
         // LD (HL),L
         // 1  8
         // - - - -
-        0x75 => unreachable,
+        0x75 => instruction.ldReg(regs.HL, regs.L, true, false, false, false),
         // HALT
         // 1  4
         // - - - -
@@ -503,39 +503,39 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // LD (HL),A
         // 1  8
         // - - - -
-        0x77 => unreachable,
+        0x77 => instruction.ldReg(regs.HL, regs.A, true, false, false, false),
         // LD A,B
         // 1  4
         // - - - -
-        0x78 => unreachable,
+        0x78 => instruction.ldReg(regs.A, regs.B, false, false, false, false),
         // LD A,C
         // 1  4
         // - - - -
-        0x79 => unreachable,
+        0x79 => instruction.ldReg(regs.A, regs.C, false, false, false, false),
         // LD A,D
         // 1  4
         // - - - -
-        0x7A => unreachable,
+        0x7A => instruction.ldReg(regs.A, regs.D, false, false, false, false),
         // LD A,E
         // 1  4
         // - - - -
-        0x7B => unreachable,
+        0x7B => instruction.ldReg(regs.A, regs.E, false, false, false, false),
         // LD A,H
         // 1  4
         // - - - -
-        0x7C => unreachable,
+        0x7C => instruction.ldReg(regs.A, regs.H, false, false, false, false),
         // LD A,L
         // 1  4
         // - - - -
-        0x7D => unreachable,
+        0x7D => instruction.ldReg(regs.A, regs.L, false, false, false, false),
         // LD A,(HL)
         // 1  8
         // - - - -
-        0x7E => unreachable,
+        0x7E => instruction.ldReg(regs.A, regs.HL, false, true, false, false),
         // LD A,A
         // 1  4
         // - - - -
-        0x7F => unreachable,
+        0x7F => instruction.ldReg(regs.A, regs.A, false, false, false, false),
         // ADD A,B
         // 1  4
         // Z 0 H C
