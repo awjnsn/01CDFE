@@ -39,15 +39,15 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // INC BC
         // 1  8
         // - - - -
-        0x03 => unreachable,
+        0x03 => instruction.inc(regs.BC, false),
         // INC B
         // 1  4
         // Z 0 H -
-        0x04 => unreachable,
+        0x04 => instruction.inc(regs.B, false),
         // DEC B
         // 1  4
         // Z 1 H -
-        0x05 => unreachable,
+        0x05 => instruction.dec(regs.B, false),
         // LD B,d8
         // 2  8
         // - - - -
@@ -71,15 +71,15 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // DEC BC
         // 1  8
         // - - - -
-        0x0B => unreachable,
+        0x0B => instruction.dec(regs.BC, false),
         // INC C
         // 1  4
         // Z 0 H -
-        0x0C => unreachable,
+        0x0C => instruction.inc(regs.C, false),
         // DEC C
         // 1  4
         // Z 1 H -
-        0x0D => unreachable,
+        0x0D => instruction.dec(regs.C, false),
         // LD C,d8
         // 2  8
         // - - - -
@@ -103,15 +103,15 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // INC DE
         // 1  8
         // - - - -
-        0x13 => unreachable,
+        0x13 => instruction.inc(regs.DE, false),
         // INC D
         // 1  4
         // Z 0 H -
-        0x14 => unreachable,
+        0x14 => instruction.inc(regs.D, false),
         // DEC D
         // 1  4
         // Z 1 H -
-        0x15 => unreachable,
+        0x15 => instruction.dec(regs.D, false),
         // LD D,d8
         // 2  8
         // - - - -
@@ -135,15 +135,15 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // DEC DE
         // 1  8
         // - - - -
-        0x1B => unreachable,
+        0x1B => instruction.dec(regs.DE, false),
         // INC E
         // 1  4
         // Z 0 H -
-        0x1C => unreachable,
+        0x1C => instruction.inc(regs.E, false),
         // DEC E
         // 1  4
         // Z 1 H -
-        0x1D => unreachable,
+        0x1D => instruction.dec(regs.E, false),
         // LD E,d8
         // 2  8
         // - - - -
@@ -167,15 +167,15 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // INC HL
         // 1  8
         // - - - -
-        0x23 => unreachable,
+        0x23 => instruction.inc(regs.HL, false),
         // INC H
         // 1  4
         // Z 0 H -
-        0x24 => unreachable,
+        0x24 => instruction.inc(regs.H, false),
         // DEC H
         // 1  4
         // Z 1 H -
-        0x25 => unreachable,
+        0x25 => instruction.dec(regs.H, false),
         // LD H,d8
         // 2  8
         // - - - -
@@ -199,15 +199,15 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // DEC HL
         // 1  8
         // - - - -
-        0x2B => unreachable,
+        0x2B => instruction.dec(regs.HL, false),
         // INC L
         // 1  4
         // Z 0 H -
-        0x2C => unreachable,
+        0x2C => instruction.inc(regs.L, false),
         // DEC L
         // 1  4
         // Z 1 H -
-        0x2D => unreachable,
+        0x2D => instruction.dec(regs.L, false),
         // LD L,d8
         // 2  8
         // - - - -
@@ -231,15 +231,15 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // INC SP
         // 1  8
         // - - - -
-        0x33 => unreachable,
+        0x33 => instruction.inc(regs.SP, false),
         // INC (HL)
         // 1  12
         // Z 0 H -
-        0x34 => unreachable,
+        0x34 => instruction.inc(regs.HL, true),
         // DEC (HL)
         // 1  12
         // Z 1 H -
-        0x35 => unreachable,
+        0x35 => instruction.dec(regs.HL, true),
         // LD (HL),d8
         // 2  12
         // - - - -
@@ -263,15 +263,15 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // DEC SP
         // 1  8
         // - - - -
-        0x3B => unreachable,
+        0x3B => instruction.dec(regs.SP, false),
         // INC A
         // 1  4
         // Z 0 H -
-        0x3C => unreachable,
+        0x3C => instruction.inc(regs.A, false),
         // DEC A
         // 1  4
         // Z 1 H -
-        0x3D => unreachable,
+        0x3D => instruction.dec(regs.A, false),
         // LD A,d8
         // 2  8
         // - - - -

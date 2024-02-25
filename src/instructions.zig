@@ -124,4 +124,54 @@ pub const Instruction = struct {
         return if (derefDst or derefSrc) 8 else 4;
     }
 
+    pub fn dec(self: *const Instruction, reg: regs, deref: bool) u8 {
+        std.debug.print("DEC ", .{});
+        if(deref) {
+            std.debug.print("(", .{});
+            st.printReg(reg);
+            std.debug.print(")", .{});
+        }
+        else {
+            st.printReg(reg);
+        }
+
+        std.debug.print("\n", .{});
+
+        // TODO
+       
+        self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 1);
+        if (deref) {
+            return 12;
+        } else if (st.State.isSingleByteReg(reg)) {
+            return 4;
+        } else {
+            return 8;
+        }
+    }
+
+    pub fn inc(self: *const Instruction, reg: regs, deref: bool) u8 {
+        std.debug.print("INC ", .{});
+        if(deref) {
+            std.debug.print("(", .{});
+            st.printReg(reg);
+            std.debug.print(")", .{});
+        }
+        else {
+            st.printReg(reg);
+        }
+
+        std.debug.print("\n", .{});
+
+        // TODO
+       
+        self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 1);
+        if (deref) {
+            return 12;
+        } else if (st.State.isSingleByteReg(reg)) {
+            return 4;
+        } else {
+            return 8;
+        }
+    }
+
 };
