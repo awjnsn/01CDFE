@@ -125,19 +125,55 @@ pub const Instruction = struct {
     }
 
     pub fn dec(self: *const Instruction, reg: regs, deref: bool) u8 {
+        self.state.resetFlags();
         std.debug.print("DEC ", .{});
+        var val: u16 = undefined;
         if(deref) {
             std.debug.print("(", .{});
             st.printReg(reg);
             std.debug.print(")", .{});
+            val = self.state.memory[self.state.getReg(reg)];
         }
         else {
             st.printReg(reg);
+            val = self.state.getReg(reg);
         }
 
         std.debug.print("\n", .{});
 
-        // TODO
+        var res: u16 = undefined;
+        var underflow: bool = false;
+        if (st.State.isSingleByteReg(reg) or deref) {
+            if (val == 0x0) {
+                underflow = true;
+                res = 0xFF;
+            } else {
+                res = val - 1;
+            }
+        } else {
+            if (val == 0x0) {
+                underflow = true;
+                res = 0xFFFF;
+            } else {
+                res = val - 1;
+            }
+        }
+
+        if (st.State.isSingleByteReg(reg) or deref) {
+            if (res == 0) {
+                self.state.setFlag(flags.Z, true);
+            }
+            self.state.setFlag(flags.N, true);
+            if ((((res & 0xF) - (1 & 0xF)) & 0x10) == 0x10) {
+                self.state.setFlag(flags.H, true);
+            }
+        }
+
+        if (deref) {
+            self.state.memory[self.state.getReg(reg)] = @truncate(res);
+        } else {
+            self.state.setReg(reg, res);
+        }
        
         self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 1);
         if (deref) {
@@ -150,20 +186,56 @@ pub const Instruction = struct {
     }
 
     pub fn inc(self: *const Instruction, reg: regs, deref: bool) u8 {
+        self.state.resetFlags();
         std.debug.print("INC ", .{});
+        var val: u16 = undefined;
         if(deref) {
             std.debug.print("(", .{});
             st.printReg(reg);
             std.debug.print(")", .{});
+            val = self.state.memory[self.state.getReg(reg)];
         }
         else {
             st.printReg(reg);
+            val = self.state.getReg(reg);
         }
 
         std.debug.print("\n", .{});
 
-        // TODO
-       
+        var res: u16 = undefined;
+        var overflow: bool = false;
+        if (st.State.isSingleByteReg(reg) or deref) {
+            if (val == 0xFF) {
+                overflow = true;
+                res = 0;
+            } else {
+                res = val + 1;
+            }
+        } else {
+            if (val == 0xFFFF) {
+                overflow = true;
+                res = 0;
+            } else {
+                res = val + 1;
+            }
+        }
+    
+        if (st.State.isSingleByteReg(reg) or deref) {
+            if (res == 0) {
+                self.state.setFlag(flags.Z, true);
+            }
+
+            if ((((res & 0xF) - (1 & 0xF)) & 0x10) == 0x10) {
+                self.state.setFlag(flags.H, true);
+            }
+        }
+
+        if (deref) {
+            self.state.memory[self.state.getReg(reg)] = @truncate(res);
+        } else {
+            self.state.setReg(reg, res);
+        }
+
         self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 1);
         if (deref) {
             return 12;
