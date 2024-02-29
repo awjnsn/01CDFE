@@ -4,7 +4,7 @@ TEST_ROM := /opt/test_roms/cpu_instrs.gb
 all: build run
 #all: build test run
 
-build: $(EMULATOR)
+build:
 	zig build
 
 test: src/main.zig src/state.zig
