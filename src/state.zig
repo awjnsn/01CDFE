@@ -68,6 +68,15 @@ pub const State = struct {
         };
     }
 
+    pub fn getCC(self: *State, cc: Cond) bool {
+        return switch (cc) {
+            Cond.Z => self.getFlag(cc),
+            Cond.NZ => !(self.getFlag(cc)),
+            Cond.C => self.getFlag(cc),
+            Cond.NC => !(self.getFlag(cc)),
+        };
+    }
+
     pub fn setReg(self: *State, reg: Regs, val: u16) void {
         // If the value is too large for the register
         if (isSingleByteReg(reg) and (val > 0xFF)) unreachable;
