@@ -149,6 +149,23 @@ pub const State = struct {
         return (@as(u16, self.memory[address + 1]) << 8) + self.memory[address];
     }
 
+    pub fn writeByte(self: *State, address: u16, val: u8) void {
+        if (address >= self.memory.len) {
+            unreachable;
+        }
+
+        self.memory[address] = val;
+    }
+
+    pub fn writeWord(self: *State, address: u16, val: u16) void {
+        if (address + 1 >= self.memory.len) {
+            unreachable;
+        }
+
+        self.memory[address] = @truncate(val & 0xFF);
+        self.memory[address + 1] = @truncate(val >> 8);
+    }
+
     pub fn pp(self: *State, stdout: anytype) !void {
         try stdout.print("Register State:\n", .{});
         try stdout.print("AF: 0x{x:0>4}\n", .{self.getReg(Regs.AF)});
@@ -202,4 +219,12 @@ test "State Change" {
     try std.testing.expectEqual(testState.getFlag(Flags.Z), true);
     try testState.pp(stdout);
     try bw.flush();
+}
+
+test "Read/Write Memory" {
+    var testState: State = State.init();
+    testState.writeByte(0xDEAD, 0xAB);
+    try std.testing.expectEqual(testState.readByte(0xDEAD), 0xAB);
+    testState.writeWord(0xBEEF, 0xABCD);
+    try std.testing.expectEqual(testState.readWord(0xBEEF), 0xABCD);
 }
