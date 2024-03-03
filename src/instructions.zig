@@ -35,7 +35,7 @@ pub const Instruction = struct {
             std.debug.print("(", .{});
             st.printReg(reg);
             std.debug.print(")", .{});
-            x = self.state.readByte(self.state.getReg(reg));
+            x = self.state.readUnsignedByte(self.state.getReg(reg));
         } else {
             st.printReg(reg);
             x = self.state.getReg(reg);
@@ -99,7 +99,7 @@ pub const Instruction = struct {
             std.debug.print("(", .{});
             st.printReg(src);
             std.debug.print(")", .{});
-            srcVal = self.state.readByte(self.state.getReg(src));
+            srcVal = self.state.readUnsignedByte(self.state.getReg(src));
         } else {
             st.printReg(src);
             srcVal = @truncate(self.state.getReg(src));
@@ -131,7 +131,7 @@ pub const Instruction = struct {
             std.debug.print("(", .{});
             st.printReg(reg);
             std.debug.print(")", .{});
-            val = self.state.readByte(self.state.getReg(reg));
+            val = self.state.readUnsignedByte(self.state.getReg(reg));
         } else {
             st.printReg(reg);
             val = self.state.getReg(reg);
@@ -191,7 +191,7 @@ pub const Instruction = struct {
             std.debug.print("(", .{});
             st.printReg(reg);
             std.debug.print(")", .{});
-            val = self.state.readByte(self.state.getReg(reg));
+            val = self.state.readUnsignedByte(self.state.getReg(reg));
         } else {
             st.printReg(reg);
             val = self.state.getReg(reg);
@@ -241,5 +241,23 @@ pub const Instruction = struct {
         } else {
             return 8;
         }
+    }
+
+    pub fn jr(self: *const Instruction, offset: i8) u8 {
+        const negative: bool = offset < 0;
+        const absOffset: i16 = @as(i16, if (negative) (-1 * offset) else (offset));
+        const absOffsetUnsigned: u16 = @bitCast(absOffset);
+        const address: u16 = self.state.getReg(regs.PC);
+
+        if (negative) {
+            self.state.setReg(regs.PC, address + 1 - absOffsetUnsigned);
+        } else {
+            self.state.setReg(regs.PC, address + 1 + absOffsetUnsigned);
+        }
+        return 12;
+    }
+
+    pub fn jrCond(self: *const Instruction, cond: cc, offset: i8) u8 {
+        return if (self.state.getCC(cond)) self.jr(offset) else 8;
     }
 };

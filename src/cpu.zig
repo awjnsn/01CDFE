@@ -14,10 +14,15 @@ pub fn executeAt(address: u16, state: *st.State) void {
     //std.debug.print("Executing insn at 0x{x}, PC: 0x{x}, first insn byte 0x{x}\n", .{ address, state.getReg(st.Regs.PC), rom_data[address] });
 
     const instruction: insn.Instruction = insn.Instruction.init(state);
-    const cb_insn: u8 = state.readByte(address + 1);
-    const d8: u8 = state.readByte(address + 1);
-    const d16: u16 = state.readWord(address + 1);
-    const a16: u16 = state.readWord(address + 1);
+    const cb_insn: u8 = state.readUnsignedByte(address + 1);
+
+    const d8: u8 = state.readUnsignedByte(address + 1);
+    const d16: u16 = state.readUnsignedWord(address + 1);
+
+    //const a8: u8 = state.readUnignedByte(address + 1);
+    const a16: u16 = state.readUnsignedWord(address + 1);
+
+    const r8: i8 = state.readSignedByte(address + 1);
 
     //std.debug.print("cb_insn: 0x{x} d8: 0x{x} d16: 0x{x} a8: 0x{x} a16: 0x{x} r8: 0x{x}\n", .{ cb_insn, d8, d16, a8, a16, r8 });
 
@@ -122,7 +127,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // JR r8
         // 2  12
         // - - - -
-        0x18 => unreachable,
+        0x18 => instruction.jr(r8),
         // ADD HL,DE
         // 1  8
         // - 0 H C
@@ -154,7 +159,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // JR NZ,r8
         // 2  12/8
         // - - - -
-        0x20 => unreachable,
+        0x20 => instruction.jrCond(cc.NZ, r8),
         // LD HL,d16
         // 3  12
         // - - - -
@@ -186,7 +191,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // JR Z,r8
         // 2  12/8
         // - - - -
-        0x28 => unreachable,
+        0x28 => instruction.jrCond(cc.Z, r8),
         // ADD HL,HL
         // 1  8
         // - 0 H C
@@ -218,7 +223,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // JR NC,r8
         // 2  12/8
         // - - - -
-        0x30 => unreachable,
+        0x30 => instruction.jrCond(cc.NC, r8),
         // LD SP,d16
         // 3  12
         // - - - -
@@ -250,7 +255,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // JR C,r8
         // 2  12/8
         // - - - -
-        0x38 => unreachable,
+        0x38 => instruction.jrCond(cc.C, r8),
         // ADD HL,SP
         // 1  8
         // - 0 H C

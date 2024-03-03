@@ -70,10 +70,10 @@ pub const State = struct {
 
     pub fn getCC(self: *State, cc: Cond) bool {
         return switch (cc) {
-            Cond.Z => self.getFlag(cc),
-            Cond.NZ => !(self.getFlag(cc)),
-            Cond.C => self.getFlag(cc),
-            Cond.NC => !(self.getFlag(cc)),
+            Cond.Z => self.getFlag(Flags.Z),
+            Cond.NZ => !(self.getFlag(Flags.Z)),
+            Cond.C => self.getFlag(Flags.C),
+            Cond.NC => !(self.getFlag(Flags.C)),
         };
     }
 
@@ -143,7 +143,7 @@ pub const State = struct {
         self.setReg(Regs.PC, self.getReg(Regs.PC) + 1);
     }
 
-    pub fn readByte(self: *State, address: u16) u8 {
+    pub fn readUnsignedByte(self: *State, address: u16) u8 {
         if (address >= self.memory.len) {
             return undefined;
         }
@@ -151,12 +151,28 @@ pub const State = struct {
         return self.memory[address];
     }
 
-    pub fn readWord(self: *State, address: u16) u16 {
+    pub fn readUnsignedWord(self: *State, address: u16) u16 {
         if (address + 1 >= self.memory.len) {
             return undefined;
         }
 
         return (@as(u16, self.memory[address + 1]) << 8) + self.memory[address];
+    }
+
+    pub fn readSignedByte(self: *State, address: u16) i8 {
+        if (address >= self.memory.len) {
+            return undefined;
+        }
+
+        return @bitCast(self.readUnsignedByte(address));
+    }
+
+    pub fn readSignedWord(self: *State, address: u16) i16 {
+        if (address + 1 >= self.memory.len) {
+            return undefined;
+        }
+
+        return @bitCast(self.readUnsignedWord(address));
     }
 
     pub fn writeByte(self: *State, address: u16, val: u8) void {
@@ -234,7 +250,7 @@ test "State Change" {
 test "Read/Write Memory" {
     var testState: State = State.init();
     testState.writeByte(0xDEAD, 0xAB);
-    try std.testing.expectEqual(testState.readByte(0xDEAD), 0xAB);
+    try std.testing.expectEqual(testState.readUnsignedByte(0xDEAD), 0xAB);
     testState.writeWord(0xBEEF, 0xABCD);
-    try std.testing.expectEqual(testState.readWord(0xBEEF), 0xABCD);
+    try std.testing.expectEqual(testState.readUnsignedWord(0xBEEF), 0xABCD);
 }
