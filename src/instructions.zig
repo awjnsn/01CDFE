@@ -20,7 +20,7 @@ pub const Instruction = struct {
     pub fn nop(self: *const Instruction) u8 {
         self.state.resetFlags();
         std.debug.print("NOP\n", .{});
-        self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 1);
+        self.state.incPC();
         return 4;
     }
 
@@ -83,9 +83,9 @@ pub const Instruction = struct {
         if (derefDst) {
             std.debug.print("(", .{});
             st.printReg(dst);
-            if(incDst) {
+            if (incDst) {
                 std.debug.print("+", .{});
-            } else if(decDst) {
+            } else if (decDst) {
                 std.debug.print("-", .{});
             }
             std.debug.print(")", .{});
@@ -99,8 +99,7 @@ pub const Instruction = struct {
             st.printReg(src);
             std.debug.print(")", .{});
             srcVal = self.state.memory[self.state.getReg(src)];
-        }
-        else {
+        } else {
             st.printReg(src);
             srcVal = @truncate(self.state.getReg(src));
         }
@@ -113,14 +112,13 @@ pub const Instruction = struct {
             self.state.setReg(dst, @as(u16, srcVal));
         }
 
-        if(incDst) {
+        if (incDst) {
             self.state.setReg(dst, self.state.getReg(dst) + 1);
         } else if (decDst) {
             self.state.setReg(dst, self.state.getReg(dst) - 1);
         }
 
-
-        self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 1);
+        self.state.incPC();
         return if (derefDst or derefSrc) 8 else 4;
     }
 
@@ -128,13 +126,12 @@ pub const Instruction = struct {
         self.state.resetFlags();
         std.debug.print("DEC ", .{});
         var val: u16 = undefined;
-        if(deref) {
+        if (deref) {
             std.debug.print("(", .{});
             st.printReg(reg);
             std.debug.print(")", .{});
             val = self.state.memory[self.state.getReg(reg)];
-        }
-        else {
+        } else {
             st.printReg(reg);
             val = self.state.getReg(reg);
         }
@@ -174,8 +171,8 @@ pub const Instruction = struct {
         } else {
             self.state.setReg(reg, res);
         }
-       
-        self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 1);
+
+        self.state.incPC();
         if (deref) {
             return 12;
         } else if (st.State.isSingleByteReg(reg)) {
@@ -189,13 +186,12 @@ pub const Instruction = struct {
         self.state.resetFlags();
         std.debug.print("INC ", .{});
         var val: u16 = undefined;
-        if(deref) {
+        if (deref) {
             std.debug.print("(", .{});
             st.printReg(reg);
             std.debug.print(")", .{});
             val = self.state.memory[self.state.getReg(reg)];
-        }
-        else {
+        } else {
             st.printReg(reg);
             val = self.state.getReg(reg);
         }
@@ -219,7 +215,7 @@ pub const Instruction = struct {
                 res = val + 1;
             }
         }
-    
+
         if (st.State.isSingleByteReg(reg) or deref) {
             if (res == 0) {
                 self.state.setFlag(flags.Z, true);
@@ -236,7 +232,7 @@ pub const Instruction = struct {
             self.state.setReg(reg, res);
         }
 
-        self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 1);
+        self.state.incPC();
         if (deref) {
             return 12;
         } else if (st.State.isSingleByteReg(reg)) {
@@ -245,5 +241,4 @@ pub const Instruction = struct {
             return 8;
         }
     }
-
 };

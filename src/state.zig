@@ -129,6 +129,10 @@ pub const State = struct {
         std.debug.print("Mapping {d} bytes\n", .{rom_data.len});
     }
 
+    pub fn incPC(self: *State) void {
+        self.setReg(Regs.PC, self.getReg(Regs.PC) + 1);
+    }
+
     pub fn pp(self: *State, stdout: anytype) !void {
         try stdout.print("Register State:\n", .{});
         try stdout.print("AF: 0x{x:0>4}\n", .{self.getReg(Regs.AF)});
