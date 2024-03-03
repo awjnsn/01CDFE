@@ -34,7 +34,7 @@ pub const Instruction = struct {
             std.debug.print("(", .{});
             st.printReg(reg);
             std.debug.print(")", .{});
-            x = self.state.memory[self.state.getReg(reg)];
+            x = self.state.readByte(self.state.getReg(reg));
         } else {
             st.printReg(reg);
             x = self.state.getReg(reg);
@@ -46,7 +46,7 @@ pub const Instruction = struct {
 
         self.state.setReg(regs.A, res);
         self.state.setFlag(flags.Z, res == 0);
-        self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 1);
+        self.state.incPC();
         return 4;
     }
 
@@ -98,7 +98,7 @@ pub const Instruction = struct {
             std.debug.print("(", .{});
             st.printReg(src);
             std.debug.print(")", .{});
-            srcVal = self.state.memory[self.state.getReg(src)];
+            srcVal = self.state.readByte(self.state.getReg(src));
         } else {
             st.printReg(src);
             srcVal = @truncate(self.state.getReg(src));
@@ -130,7 +130,7 @@ pub const Instruction = struct {
             std.debug.print("(", .{});
             st.printReg(reg);
             std.debug.print(")", .{});
-            val = self.state.memory[self.state.getReg(reg)];
+            val = self.state.readByte(self.state.getReg(reg));
         } else {
             st.printReg(reg);
             val = self.state.getReg(reg);
@@ -190,7 +190,7 @@ pub const Instruction = struct {
             std.debug.print("(", .{});
             st.printReg(reg);
             std.debug.print(")", .{});
-            val = self.state.memory[self.state.getReg(reg)];
+            val = self.state.readByte(self.state.getReg(reg));
         } else {
             st.printReg(reg);
             val = self.state.getReg(reg);

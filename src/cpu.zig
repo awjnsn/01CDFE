@@ -13,12 +13,10 @@ pub fn executeAt(address: u16, state: *st.State) void {
     //std.debug.print("Executing insn at 0x{x}, PC: 0x{x}, first insn byte 0x{x}\n", .{ address, state.getReg(st.Regs.PC), rom_data[address] });
 
     const instruction: insn.Instruction = insn.Instruction.init(state);
-    const cb_insn: u8 = if (address + 1 < state.memory.len) state.memory[address + 1] else undefined;
-    const d8: u8 = if (address + 1 < state.memory.len) state.memory[address + 1] else undefined;
-    const d16: u16 = if (address + 2 < state.memory.len) (@as(u16, state.memory[address + 2]) << 8) + state.memory[address + 1] else undefined;
-    //const a8: u8 = if (address + 1 < state.memory.len) state.memory[address + 1] else undefined;
-    const a16: u16 = if (address + 2 < state.memory.len) (@as(u16, state.memory[address + 2]) << 8) + state.memory[address + 1] else undefined;
-    //const r8: i8 = if (address + 1 < state.memory.len) state.memory[address + 1] else undefined;
+    const cb_insn: u8 = state.readByte(address + 1);
+    const d8: u8 = state.readByte(address + 1);
+    const d16: u16 = state.readWord(address + 1);
+    const a16: u16 = state.readWord(address + 1);
 
     //std.debug.print("cb_insn: 0x{x} d8: 0x{x} d16: 0x{x} a8: 0x{x} a16: 0x{x} r8: 0x{x}\n", .{ cb_insn, d8, d16, a8, a16, r8 });
 

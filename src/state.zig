@@ -133,6 +133,22 @@ pub const State = struct {
         self.setReg(Regs.PC, self.getReg(Regs.PC) + 1);
     }
 
+    pub fn readByte(self: *State, address: u16) u8 {
+        if (address >= self.memory.len) {
+            return undefined;
+        }
+
+        return self.memory[address];
+    }
+
+    pub fn readWord(self: *State, address: u16) u16 {
+        if (address + 1 >= self.memory.len) {
+            return undefined;
+        }
+
+        return (@as(u16, self.memory[address + 1]) << 8) + self.memory[address];
+    }
+
     pub fn pp(self: *State, stdout: anytype) !void {
         try stdout.print("Register State:\n", .{});
         try stdout.print("AF: 0x{x:0>4}\n", .{self.getReg(Regs.AF)});
