@@ -2,6 +2,7 @@ const std = @import("std");
 const st = @import("state.zig");
 const regs = st.Regs;
 const flags = st.Flags;
+const cc = st.Cond;
 
 pub const Instruction = struct {
     state: *st.State,

@@ -1,8 +1,8 @@
 EMULATOR := zig-out/bin/01CDFE
 TEST_ROM := /opt/test_roms/cpu_instrs.gb
 
-all: build run
-#all: build test run
+#all: build run
+all: build test run
 
 build:
 	zig build

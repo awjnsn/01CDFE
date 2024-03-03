@@ -3,6 +3,7 @@ const cartHeader = @import("cartHeader.zig");
 
 pub const Regs = enum { AF, A, BC, B, C, DE, D, E, HL, H, L, SP, PC };
 pub const Flags = enum { Z, N, H, C };
+pub const Cond = enum { Z, NZ, C, NC };
 
 pub fn printReg(reg: Regs) void {
     switch (reg) {

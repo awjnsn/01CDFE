@@ -1,6 +1,7 @@
 const std = @import("std");
 const st = @import("state.zig");
 const regs = st.Regs;
+const cc = st.Cond;
 const insn = @import("instructions.zig");
 
 // Execute the instruction pointed to by the PC register
