@@ -4,6 +4,11 @@ const regs = st.Regs;
 const flags = st.Flags;
 const cc = st.Cond;
 
+pub fn halfCarry(a: u16, b: u16) bool {
+    // Who's to say if this is right?
+    return (((a & 0xF) + (b & 0xF)) & 0x10) == 0x10;
+}
+
 pub const Instruction = struct {
     state: *st.State,
 
@@ -162,7 +167,7 @@ pub const Instruction = struct {
                 self.state.setFlag(flags.Z, true);
             }
             self.state.setFlag(flags.N, true);
-            if ((((res & 0xF) - (1 & 0xF)) & 0x10) == 0x10) {
+            if (halfCarry(res, 1)) {
                 self.state.setFlag(flags.H, true);
             }
         }
@@ -222,7 +227,7 @@ pub const Instruction = struct {
                 self.state.setFlag(flags.Z, true);
             }
 
-            if ((((res & 0xF) - (1 & 0xF)) & 0x10) == 0x10) {
+            if (halfCarry(res, 1)) {
                 self.state.setFlag(flags.H, true);
             }
         }
@@ -244,6 +249,7 @@ pub const Instruction = struct {
     }
 
     pub fn jr(self: *const Instruction, offset: i8) u8 {
+        self.state.resetFlags();
         std.debug.print("JR {x}", .{offset});
         const negative: bool = offset < 0;
         const absOffset: i16 = @as(i16, if (negative) (-1 * offset) else (offset));
@@ -263,7 +269,11 @@ pub const Instruction = struct {
         st.printCC(cond);
         std.debug.print(", ${x}\n", .{offset});
 
-        if (!self.state.getCC(cond)) {
+        const condMet: bool = self.state.getCC(cond);
+        self.state.resetFlags();
+
+        if (!condMet) {
+            self.state.incPC();
             return 8;
         }
 
