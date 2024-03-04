@@ -273,7 +273,7 @@ pub const Instruction = struct {
         self.state.resetFlags();
 
         if (!condMet) {
-            self.state.incPC();
+            self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 2);
             return 8;
         }
 
