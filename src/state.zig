@@ -23,6 +23,15 @@ pub fn printReg(reg: Regs) void {
     }
 }
 
+pub fn printCC(cc: Cond) void {
+    switch (cc) {
+        Cond.Z => std.debug.print("Z", .{}),
+        Cond.NZ => std.debug.print("NZ", .{}),
+        Cond.C => std.debug.print("C", .{}),
+        Cond.NC => std.debug.print("NC", .{}),
+    }
+}
+
 pub const State = struct {
     rom_data: []u8,
     memory: [0x10000]u8,

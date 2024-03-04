@@ -244,6 +244,7 @@ pub const Instruction = struct {
     }
 
     pub fn jr(self: *const Instruction, offset: i8) u8 {
+        std.debug.print("JR {x}", .{offset});
         const negative: bool = offset < 0;
         const absOffset: i16 = @as(i16, if (negative) (-1 * offset) else (offset));
         const absOffsetUnsigned: u16 = @bitCast(absOffset);
@@ -258,6 +259,24 @@ pub const Instruction = struct {
     }
 
     pub fn jrCond(self: *const Instruction, cond: cc, offset: i8) u8 {
-        return if (self.state.getCC(cond)) self.jr(offset) else 8;
+        std.debug.print("JR ", .{});
+        st.printCC(cond);
+        std.debug.print(", ${x}\n", .{offset});
+
+        if (!self.state.getCC(cond)) {
+            return 8;
+        }
+
+        const negative: bool = offset < 0;
+        const absOffset: i16 = @as(i16, if (negative) (-1 * offset) else (offset));
+        const absOffsetUnsigned: u16 = @bitCast(absOffset);
+        const address: u16 = self.state.getReg(regs.PC);
+
+        if (negative) {
+            self.state.setReg(regs.PC, address + 2 - absOffsetUnsigned);
+        } else {
+            self.state.setReg(regs.PC, address + 2 + absOffsetUnsigned);
+        }
+        return 12;
     }
 };
