@@ -2009,7 +2009,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // DI
         // 1  4
         // - - - -
-        0xF3 => unreachable,
+        0xF3 => instruction.ime(false),
         // No instruction
         0xF4 => unreachable,
         // PUSH AF
@@ -2039,7 +2039,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // EI
         // 1  4
         // - - - -
-        0xFB => unreachable,
+        0xFB => instruction.ime(true),
         // No instruction
         0xFC => unreachable,
         // No instruction

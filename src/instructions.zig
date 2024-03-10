@@ -289,4 +289,20 @@ pub const Instruction = struct {
         }
         return 12;
     }
+
+    pub fn ime(self: *const Instruction, flag: bool) u8 {
+        self.state.resetFlags();
+
+        if (flag) {
+            std.debug.print("EI\n", .{});
+        } else {
+            std.debug.print("DI\n", .{});
+        }
+
+        self.state.setFlag(flags.IME, flag);
+
+        self.state.incPC();
+
+        return 4;
+    }
 };

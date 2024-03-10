@@ -2,7 +2,7 @@ const std = @import("std");
 const cartHeader = @import("cartHeader.zig");
 
 pub const Regs = enum { AF, A, BC, B, C, DE, D, E, HL, H, L, SP, PC };
-pub const Flags = enum { Z, N, H, C };
+pub const Flags = enum { Z, N, H, C, IME };
 pub const Cond = enum { Z, NZ, C, NC };
 
 pub fn printReg(reg: Regs) void {
@@ -41,6 +41,7 @@ pub const State = struct {
     reg_HL: u16,
     reg_SP: u16,
     reg_PC: u16,
+    ime: bool = false,
 
     pub fn isSingleByteReg(reg: Regs) bool {
         return switch (reg) {
@@ -65,6 +66,7 @@ pub const State = struct {
             Flags.N => self.reg_AF ^= if (val) (0x1 << 0x6) else 0x0,
             Flags.H => self.reg_AF ^= if (val) (0x1 << 0x5) else 0x0,
             Flags.C => self.reg_AF ^= if (val) (0x1 << 0x4) else 0x0,
+            Flags.IME => self.ime = val,
         }
     }
 
@@ -74,6 +76,7 @@ pub const State = struct {
             Flags.N => (self.reg_AF & (0x1 << 0x6)) > 0,
             Flags.H => (self.reg_AF & (0x1 << 0x5)) > 0,
             Flags.C => (self.reg_AF & (0x1 << 0x4)) > 0,
+            Flags.IME => self.ime,
         };
     }
 
@@ -220,7 +223,8 @@ pub const State = struct {
         try stdout.print("[Z: {}] ", .{self.getFlag(Flags.Z)});
         try stdout.print("[N: {}] ", .{self.getFlag(Flags.N)});
         try stdout.print("[H: {}] ", .{self.getFlag(Flags.H)});
-        try stdout.print("[C: {}]\n\n", .{self.getFlag(Flags.C)});
+        try stdout.print("[C: {}] ", .{self.getFlag(Flags.C)});
+        try stdout.print("[IME: {}]\n\n", .{self.getFlag(Flags.IME)});
     }
 
     pub fn dumpMem(self: *State) void {
