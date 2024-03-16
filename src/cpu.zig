@@ -19,7 +19,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
     const d8: u8 = state.readUnsignedByte(address + 1);
     const d16: u16 = state.readUnsignedWord(address + 1);
 
-    //const a8: u8 = state.readUnignedByte(address + 1);
+    const a8: u8 = state.readUnsignedByte(address + 1);
     const a16: u16 = state.readUnsignedWord(address + 1);
 
     const r8: i8 = state.readSignedByte(address + 1);
@@ -1943,7 +1943,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // LDH (a8),A
         // 2  12
         // - - - -
-        0xE0 => unreachable,
+        0xE0 => instruction.ldhImm8A(a8),
         // POP HL
         // 1  12
         // - - - -
@@ -1979,7 +1979,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // LD (a16),A
         // 3  16
         // - - - -
-        0xEA => unreachable,
+        0xEA => instruction.ldImm16A(a16),
         // No instruction
         0xEB => unreachable,
         // No instruction
@@ -1997,7 +1997,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // LDH A,(a8)
         // 2  12
         // - - - -
-        0xF0 => unreachable,
+        0xF0 => instruction.ldhAImm8(a8),
         // POP AF
         // 1  12
         // Z N H C
@@ -2035,7 +2035,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // LD A,(a16)
         // 3  16
         // - - - -
-        0xFA => unreachable,
+        0xFA => instruction.ldAImm16(a16),
         // EI
         // 1  4
         // - - - -

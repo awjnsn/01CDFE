@@ -73,6 +73,7 @@ pub const Instruction = struct {
             std.debug.print("(", .{});
             st.printReg(reg);
             std.debug.print(")", .{});
+            // TODO: Use new API
             self.state.memory[self.state.getReg(reg)] = imm;
         } else {
             st.printReg(reg);
@@ -113,6 +114,7 @@ pub const Instruction = struct {
         std.debug.print("\n", .{});
 
         if (derefDst) {
+            //TODO: Use new API
             self.state.memory[self.state.getReg(dst)] = srcVal;
         } else {
             self.state.setReg(dst, @as(u16, srcVal));
@@ -173,6 +175,7 @@ pub const Instruction = struct {
         }
 
         if (deref) {
+            //TODO: Use new API
             self.state.memory[self.state.getReg(reg)] = @truncate(res);
         } else {
             self.state.setReg(reg, res);
@@ -233,6 +236,7 @@ pub const Instruction = struct {
         }
 
         if (deref) {
+            //TODO: Use new API
             self.state.memory[self.state.getReg(reg)] = @truncate(res);
         } else {
             self.state.setReg(reg, res);
@@ -304,5 +308,41 @@ pub const Instruction = struct {
         self.state.incPC();
 
         return 4;
+    }
+
+    //self.state.readUnsignedByte(self.state.getReg(reg));
+
+    pub fn ldhImm8A(self: *const Instruction, a8: u8) u8 {
+        self.state.resetFlags();
+        std.debug.print("LDH (${X}),A\n", .{a8});
+        const dest: u16 = @as(u16, a8) + 0xFF00;
+        self.state.writeByte(dest, @truncate(self.state.getReg(regs.A)));
+        self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 2);
+        return 12;
+    }
+
+    pub fn ldhAImm8(self: *const Instruction, a8: u8) u8 {
+        self.state.resetFlags();
+        std.debug.print("LDH A,(${X})\n", .{a8});
+        const src: u16 = @as(u16, a8) + 0xFF00;
+        self.state.setReg(regs.A, self.state.readUnsignedByte(src));
+        self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 2);
+        return 12;
+    }
+
+    pub fn ldImm16A(self: *const Instruction, dest: u16) u8 {
+        self.state.resetFlags();
+        std.debug.print("LD (${X}),A\n", .{dest});
+        self.state.writeByte(dest, @truncate(self.state.getReg(regs.A)));
+        self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 3);
+        return 16;
+    }
+
+    pub fn ldAImm16(self: *const Instruction, src: u16) u8 {
+        self.state.resetFlags();
+        self.state.setReg(regs.A, self.state.readUnsignedByte(src));
+        std.debug.print("LD A,(${X})\n", .{src});
+        self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 3);
+        return 16;
     }
 };
