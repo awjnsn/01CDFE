@@ -73,8 +73,7 @@ pub const Instruction = struct {
             std.debug.print("(", .{});
             st.printReg(reg);
             std.debug.print(")", .{});
-            // TODO: Use new API
-            self.state.memory[self.state.getReg(reg)] = imm;
+            self.state.writeByte(self.state.getReg(reg), imm);
         } else {
             st.printReg(reg);
             self.state.setReg(reg, imm);
@@ -114,8 +113,7 @@ pub const Instruction = struct {
         std.debug.print("\n", .{});
 
         if (derefDst) {
-            //TODO: Use new API
-            self.state.memory[self.state.getReg(dst)] = srcVal;
+            self.state.writeByte(self.state.getReg(dst), srcVal);
         } else {
             self.state.setReg(dst, @as(u16, srcVal));
         }
@@ -175,8 +173,7 @@ pub const Instruction = struct {
         }
 
         if (deref) {
-            //TODO: Use new API
-            self.state.memory[self.state.getReg(reg)] = @truncate(res);
+            self.state.writeByte(self.state.getReg(reg), @truncate(res));
         } else {
             self.state.setReg(reg, res);
         }
@@ -236,8 +233,7 @@ pub const Instruction = struct {
         }
 
         if (deref) {
-            //TODO: Use new API
-            self.state.memory[self.state.getReg(reg)] = @truncate(res);
+            self.state.writeByte(self.state.getReg(reg), @truncate(res));
         } else {
             self.state.setReg(reg, res);
         }
@@ -309,8 +305,6 @@ pub const Instruction = struct {
 
         return 4;
     }
-
-    //self.state.readUnsignedByte(self.state.getReg(reg));
 
     pub fn ldhImm8A(self: *const Instruction, a8: u8) u8 {
         self.state.resetFlags();
