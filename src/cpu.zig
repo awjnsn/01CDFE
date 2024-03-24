@@ -767,35 +767,35 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // CP B
         // 1  4
         // Z 1 H C
-        0xB8 => unreachable,
+        0xB8 => instruction.cpReg(regs.B, false),
         // CP C
         // 1  4
         // Z 1 H C
-        0xB9 => unreachable,
+        0xB9 => instruction.cpReg(regs.C, false),
         // CP D
         // 1  4
         // Z 1 H C
-        0xBA => unreachable,
+        0xBA => instruction.cpReg(regs.D, false),
         // CP E
         //1  4
         // Z 1 H C
-        0xBB => unreachable,
+        0xBB => instruction.cpReg(regs.E, false),
         // CP H
         // 1  4
         // Z 1 H C
-        0xBC => unreachable,
+        0xBC => instruction.cpReg(regs.H, false),
         // CP L
         // 1  4
         // Z 1 H C
-        0xBD => unreachable,
+        0xBD => instruction.cpReg(regs.L, false),
         // CP (HL)
         // 1  8
         // Z 1 H C
-        0xBE => unreachable,
+        0xBE => instruction.cpReg(regs.HL, true),
         // CP A
         // 1  4
         // Z 1 H C
-        0xBF => unreachable,
+        0xBF => instruction.cpReg(regs.A, false),
         // RET NZ
         // 1  20/8
         // - - - -
@@ -2047,7 +2047,7 @@ pub fn executeAt(address: u16, state: *st.State) void {
         // CP d8
         // 2  8
         // Z 1 H C
-        0xFE => unreachable,
+        0xFE => instruction.cpImm8(d8),
         // RST 38H
         // 1  16
         // - - - -

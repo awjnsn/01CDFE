@@ -339,4 +339,37 @@ pub const Instruction = struct {
         self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 3);
         return 16;
     }
+
+    pub fn _cp(self: *const Instruction, val: u8) void {
+        const a: u8 = @truncate(self.state.getReg(regs.A));
+        self.state.setFlag(flags.Z, a == val);
+        self.state.setFlag(flags.N, true);
+        self.state.setFlag(flags.H, halfCarry(a, val));
+        self.state.setFlag(flags.C, val > a);
+    }
+
+    pub fn cpReg(self: *const Instruction, reg: regs, deref: bool) u8 {
+        self.state.resetFlags();
+        std.debug.print("CP ", .{});
+        if (deref) {
+            std.debug.print("(", .{});
+            st.printReg(reg);
+            std.debug.print(")", .{});
+            self._cp(self.state.readUnsignedByte(self.state.getReg(reg)));
+        } else {
+            st.printReg(reg);
+            self._cp(@truncate(self.state.getReg(reg)));
+        }
+        std.debug.print("\n", .{});
+        self.state.incPC();
+        return if (deref) 8 else 4;
+    }
+
+    pub fn cpImm8(self: *const Instruction, imm: u8) u8 {
+        self.state.resetFlags();
+        std.debug.print("CP ${X}\n", .{imm});
+        self._cp(imm);
+        self.state.setReg(regs.PC, self.state.getReg(regs.PC) + 2);
+        return 8;
+    }
 };
