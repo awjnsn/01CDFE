@@ -160,6 +160,8 @@ pub const State = struct {
             return undefined;
         }
 
+        // TODO: Handle side effects of writing to special memory location
+
         return self.memory[address];
     }
 
@@ -168,7 +170,12 @@ pub const State = struct {
             return undefined;
         }
 
-        return (@as(u16, self.memory[address + 1]) << 8) + self.memory[address];
+        // To make it easier to handle special cases, all writing is done by
+        // one function `readUnsignedByte`
+        const hi: u8 = self.readUnsignedByte(address + 1);
+        const low: u8 = self.readUnsignedByte(address);
+
+        return (@as(u16, hi) << 8) + low;
     }
 
     pub fn readSignedByte(self: *State, address: u16) i8 {
@@ -193,6 +200,8 @@ pub const State = struct {
         }
 
         self.memory[address] = val;
+
+        // TODO: Handle side effects of writing to special memory location
     }
 
     pub fn writeWord(self: *State, address: u16, val: u16) void {
@@ -200,8 +209,10 @@ pub const State = struct {
             unreachable;
         }
 
-        self.memory[address] = @truncate(val & 0xFF);
-        self.memory[address + 1] = @truncate(val >> 8);
+        // To make it easier to handle special cases, all writing is done by
+        // one function `writeByte`
+        self.writeByte(address, @truncate(val & 0xFF));
+        self.writeByte(address + 1, @truncate(val >> 8));
     }
 
     pub fn pp(self: *State, stdout: anytype) !void {
