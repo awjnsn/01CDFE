@@ -1,6 +1,9 @@
 const std = @import("std");
 const core = @import("mach").core;
 const gpu = core.gpu;
+const state = @import("state.zig");
+const cartHeader = @import("cartHeader.zig");
+const cpu = @import("cpu.zig");
 
 pub const App = @This();
 
@@ -90,11 +93,6 @@ pub fn update(app: *App) !bool {
     return false;
 }
 
-//const std = @import("std");
-//const state = @import("state.zig");
-//const cartHeader = @import("cartHeader.zig");
-//const cpu = @import("cpu.zig");
-
 //pub fn main() !void {
 //    const allocator = std.heap.page_allocator;
 //    const args = try std.process.argsAlloc(allocator);
@@ -123,15 +121,15 @@ pub fn update(app: *App) !bool {
 //    }
 //}
 
-//test "Read ROM" {
-//    const stdout_file = std.io.getStdOut().writer();
-//    var bw = std.io.bufferedWriter(stdout_file);
-//    const stdout = bw.writer();
-//    const rom_path = "/opt/test_roms/cpu_instrs.gb";
-//    const allocator = std.heap.page_allocator;
-//    const rom_file = try std.fs.cwd().openFile(rom_path, .{});
-//    const rom_data: []u8 = try rom_file.readToEndAlloc(allocator, 8192 * 1024);
-//    defer allocator.free(rom_data);
-//    try stdout.print("Read in {s} of size {d}\n", .{ rom_path, rom_data.len });
-//    try bw.flush();
-//}
+test "Read ROM" {
+    const stdout_file = std.io.getStdOut().writer();
+    var bw = std.io.bufferedWriter(stdout_file);
+    const stdout = bw.writer();
+    const rom_path = "/opt/test_roms/cpu_instrs.gb";
+    const allocator = std.heap.page_allocator;
+    const rom_file = try std.fs.cwd().openFile(rom_path, .{});
+    const rom_data: []u8 = try rom_file.readToEndAlloc(allocator, 8192 * 1024);
+    defer allocator.free(rom_data);
+    try stdout.print("Read in {s} of size {d}\n", .{ rom_path, rom_data.len });
+    try bw.flush();
+}
