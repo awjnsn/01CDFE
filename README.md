@@ -1,3 +1,3 @@
 # 01CDFE
 
-See [docs](docs) for dev notes
+See [the wiki](https://github.com/awjnsn/01CDFE/wiki) for dev notes
