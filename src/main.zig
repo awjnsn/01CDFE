@@ -9,6 +9,10 @@ pub const App = @This();
 
 title_timer: core.Timer,
 pipeline: *gpu.RenderPipeline,
+allocator: std.mem.Allocator,
+rom_data: []u8,
+header: cartHeader.CartridgeHeader,
+st: state.State,
 
 pub fn init(app: *App) !void {
     try core.init(.{});
@@ -37,12 +41,24 @@ pub fn init(app: *App) !void {
     };
     const pipeline = core.device.createRenderPipeline(&pipeline_descriptor);
 
-    app.* = .{ .title_timer = try core.Timer.start(), .pipeline = pipeline };
+    const allocator = std.heap.page_allocator;
+    const args = try std.process.argsAlloc(allocator);
+    defer std.process.argsFree(allocator, args);
+    const rom_file = try std.fs.cwd().openFile(args[1], .{});
+    const rom_data: []u8 = try rom_file.readToEndAlloc(allocator, 8192 * 1024);
+
+    const header: cartHeader.CartridgeHeader = cartHeader.CartridgeHeader.init(rom_data);
+    header.pp();
+
+    var st: state.State = state.State.init();
+    st.mapMemory(rom_data, header.getMapper());
+
+    app.* = .{ .title_timer = try core.Timer.start(), .pipeline = pipeline, .allocator = allocator, .rom_data = rom_data, .header = header, .st = st };
 }
 
 pub fn deinit(app: *App) void {
     defer core.deinit();
-    _ = app;
+    defer app.allocator.free(app.rom_data);
 }
 
 pub fn update(app: *App) !bool {
@@ -90,36 +106,12 @@ pub fn update(app: *App) !bool {
         });
     }
 
+    std.debug.print("\u{001B}[1m@PC=${X}:\u{001B}[0m\t", .{app.st.getReg(state.Regs.PC)});
+    cpu.execute(&app.st);
+    app.st.pp();
+
     return false;
 }
-
-//pub fn main() !void {
-//    const allocator = std.heap.page_allocator;
-//    const args = try std.process.argsAlloc(allocator);
-//    defer std.process.argsFree(allocator, args);
-//    const rom_file = try std.fs.cwd().openFile(args[1], .{});
-//    const rom_data: []u8 = try rom_file.readToEndAlloc(allocator, 8192 * 1024);
-//    defer allocator.free(rom_data);
-
-//    const stdout_file = std.io.getStdOut().writer();
-//    var bw = std.io.bufferedWriter(stdout_file);
-//    const stdout = bw.writer();
-
-//    const header: cartHeader.CartridgeHeader = cartHeader.CartridgeHeader.init(rom_data);
-//    try header.pp(stdout);
-
-//    var st: state.State = state.State.init();
-
-//    st.mapMemory(rom_data, header.getMapper());
-
-//    while (true) {
-//        //try st.pp(stdout);
-//        std.debug.print("\u{001B}[1m@PC=${X}:\u{001B}[0m\t", .{st.getReg(state.Regs.PC)});
-//        cpu.execute(&st);
-//        try st.pp(stdout);
-//        try bw.flush();
-//    }
-//}
 
 test "Read ROM" {
     const stdout_file = std.io.getStdOut().writer();
