@@ -71,19 +71,19 @@ pub const CartridgeHeader = struct {
         };
     }
 
-    pub fn pp(self: CartridgeHeader, stdout: anytype) !void {
-        try stdout.print("Catridge Header for {s}:\n", .{self.title});
-        try stdout.print("\tMapper:", .{});
+    pub fn pp(self: CartridgeHeader) void {
+        std.debug.print("Catridge Header for {s}:\n", .{self.title});
+        std.debug.print("\tMapper:", .{});
         switch (self.getMapper()) {
-            Mapper.ROM_ONLY => try stdout.print("ROM ONLY\n", .{}),
-            Mapper.MBC1 => try stdout.print("MBC1\n", .{}),
-            Mapper.MBC2 => try stdout.print("MBC2\n", .{}),
-            Mapper.MBC3 => try stdout.print("MBC3\n", .{}),
-            Mapper.MBC5 => try stdout.print("MBC5\n", .{}),
-            Mapper.MBC7 => try stdout.print("MBC7\n", .{}),
-            Mapper.MMM01 => try stdout.print("MMM01\n", .{}),
-            Mapper.HuC1 => try stdout.print("HuC1\n", .{}),
-            Mapper.HuC3 => try stdout.print("HuC3\n", .{}),
+            Mapper.ROM_ONLY => std.debug.print("ROM ONLY\n", .{}),
+            Mapper.MBC1 => std.debug.print("MBC1\n", .{}),
+            Mapper.MBC2 => std.debug.print("MBC2\n", .{}),
+            Mapper.MBC3 => std.debug.print("MBC3\n", .{}),
+            Mapper.MBC5 => std.debug.print("MBC5\n", .{}),
+            Mapper.MBC7 => std.debug.print("MBC7\n", .{}),
+            Mapper.MMM01 => std.debug.print("MMM01\n", .{}),
+            Mapper.HuC1 => std.debug.print("HuC1\n", .{}),
+            Mapper.HuC3 => std.debug.print("HuC3\n", .{}),
             else => unreachable,
         }
     }

@@ -215,27 +215,27 @@ pub const State = struct {
         self.writeByte(address + 1, @truncate(val >> 8));
     }
 
-    pub fn pp(self: *State, stdout: anytype) !void {
-        try stdout.print("Register State:\n", .{});
-        try stdout.print("AF: 0x{x:0>4}\n", .{self.getReg(Regs.AF)});
-        try stdout.print(" A: 0x{x:0>2}\n", .{self.getReg(Regs.A)});
-        try stdout.print("BC: 0x{x:0>4}\n", .{self.getReg(Regs.BC)});
-        try stdout.print(" B: 0x{x:0>2}\n", .{self.getReg(Regs.B)});
-        try stdout.print(" C: 0x{x:0>2}\n", .{self.getReg(Regs.C)});
-        try stdout.print("DE: 0x{x:0>4}\n", .{self.getReg(Regs.DE)});
-        try stdout.print(" D: 0x{x:0>2}\n", .{self.getReg(Regs.D)});
-        try stdout.print(" E: 0x{x:0>2}\n", .{self.getReg(Regs.E)});
-        try stdout.print("HL: 0x{x:0>4}\n", .{self.getReg(Regs.HL)});
-        try stdout.print(" H: 0x{x:0>2}\n", .{self.getReg(Regs.H)});
-        try stdout.print(" L: 0x{x:0>2}\n", .{self.getReg(Regs.L)});
-        try stdout.print("SP: 0x{x:0>4}\n", .{self.getReg(Regs.SP)});
-        try stdout.print("PC: 0x{x:0>4}\n", .{self.getReg(Regs.PC)});
-        try stdout.print("Flag State ", .{});
-        try stdout.print("[Z: {}] ", .{self.getFlag(Flags.Z)});
-        try stdout.print("[N: {}] ", .{self.getFlag(Flags.N)});
-        try stdout.print("[H: {}] ", .{self.getFlag(Flags.H)});
-        try stdout.print("[C: {}] ", .{self.getFlag(Flags.C)});
-        try stdout.print("[IME: {}]\n\n", .{self.getFlag(Flags.IME)});
+    pub fn pp(self: *State) void {
+        std.debug.print("Register State:\n", .{});
+        std.debug.print("AF: 0x{x:0>4}\n", .{self.getReg(Regs.AF)});
+        std.debug.print(" A: 0x{x:0>2}\n", .{self.getReg(Regs.A)});
+        std.debug.print("BC: 0x{x:0>4}\n", .{self.getReg(Regs.BC)});
+        std.debug.print(" B: 0x{x:0>2}\n", .{self.getReg(Regs.B)});
+        std.debug.print(" C: 0x{x:0>2}\n", .{self.getReg(Regs.C)});
+        std.debug.print("DE: 0x{x:0>4}\n", .{self.getReg(Regs.DE)});
+        std.debug.print(" D: 0x{x:0>2}\n", .{self.getReg(Regs.D)});
+        std.debug.print(" E: 0x{x:0>2}\n", .{self.getReg(Regs.E)});
+        std.debug.print("HL: 0x{x:0>4}\n", .{self.getReg(Regs.HL)});
+        std.debug.print(" H: 0x{x:0>2}\n", .{self.getReg(Regs.H)});
+        std.debug.print(" L: 0x{x:0>2}\n", .{self.getReg(Regs.L)});
+        std.debug.print("SP: 0x{x:0>4}\n", .{self.getReg(Regs.SP)});
+        std.debug.print("PC: 0x{x:0>4}\n", .{self.getReg(Regs.PC)});
+        std.debug.print("Flag State ", .{});
+        std.debug.print("[Z: {}] ", .{self.getFlag(Flags.Z)});
+        std.debug.print("[N: {}] ", .{self.getFlag(Flags.N)});
+        std.debug.print("[H: {}] ", .{self.getFlag(Flags.H)});
+        std.debug.print("[C: {}] ", .{self.getFlag(Flags.C)});
+        std.debug.print("[IME: {}]\n\n", .{self.getFlag(Flags.IME)});
     }
 
     pub fn dumpMem(self: *State) void {
@@ -254,21 +254,17 @@ pub const State = struct {
 };
 
 test "State Change" {
-    const stdout_file = std.io.getStdOut().writer();
-    var bw = std.io.bufferedWriter(stdout_file);
-    const stdout = bw.writer();
     var testState: State = State.init();
-    try stdout.print("Initial state\n\n", .{});
-    try testState.pp(stdout);
-    try stdout.print("Changing PC\n\n", .{});
+    std.debug.print("Initial state\n\n", .{});
+    testState.pp();
+    std.debug.print("Changing PC\n\n", .{});
     testState.setReg(Regs.PC, 0xBEEF);
     try std.testing.expectEqual(testState.getReg(Regs.PC), 0xBEEF);
-    try testState.pp(stdout);
-    try stdout.print("Setting Z flag\n\n", .{});
+    testState.pp();
+    std.debug.print("Setting Z flag\n\n", .{});
     testState.setFlag(Flags.Z, true);
     try std.testing.expectEqual(testState.getFlag(Flags.Z), true);
-    try testState.pp(stdout);
-    try bw.flush();
+    testState.pp();
 }
 
 test "Read/Write Memory" {
