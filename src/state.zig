@@ -146,7 +146,8 @@ pub const State = struct {
         self.rom_data = rom_data;
         switch (mapper) {
             cartHeader.Mapper.ROM_ONLY => std.mem.copyForwards(u8, &self.memory, self.rom_data),
-            else => std.debug.print("Unsupported!\n", .{}),
+            cartHeader.Mapper.MBC1 => std.debug.print("In progress :)\n", .{}),
+            else => unreachable,
         }
         std.debug.print("Mapping {d} bytes\n", .{rom_data.len});
     }
